@@ -77,7 +77,6 @@ function addUser($conn,$request)
   $emerName = $request->emerName;
   $verification = $request->verification;
   $password = $request->password;
-  // $profile = $request->profile;
   $blood = $request->blood;
   $height = $request->height;
   $weight = $request->weight;
@@ -96,14 +95,8 @@ function addUser($conn,$request)
   VALUES ($id,'$name','$phone','$email','$gender','$address','$dob','$emerNum','$emerName','$nationality','$verification','$password','$blood','$height','$weight','$other',$planC,$plans,'$joind','$expd'
   ,$trainer, $discc, $discp, $method)";
   $result = $conn->query($sql);
-  $sql = "UPDATE user SET pic='$profile' WHERE id=$id";
-  $result = $conn->query($sql);
-  echo mysqli_error($conn);
-  // echo $profile;
   $sql = "INSERT INTO login (id,password,type) VALUES ($id,'$password','user')";
   $result = $conn->query($sql);
-  // echo mysqli_error($conn);
-  // echo "success";
   exit();
 }
 

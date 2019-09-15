@@ -4,13 +4,24 @@
   <head>
     <meta charset="utf-8">
     <title>INVOICE</title>
+            <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <link rel="stylesheet" href="style.css" media="all" />
+
   </head>
   <body>
     <header class="clearfix">
       <div id="logo">
-        <img src="logo.png">
+        <img src="logo.png" style="height:120px;">
       </div>
+        <button onClick="downClick()" class="dwn btn btn-block btn-primary">Download</button>
+        <script>
+            function downClick(){
+                document.querySelector(".dwn").style.display = "none";
+                window.print();
+                window.location.href = "";
+            }
+        </script>
+        <br>
       <h1>INVOICE</h1>
       <div id="company" class="clearfix">
         
@@ -62,9 +73,8 @@
         }
         $user_total =$user_plan_fees;  
         $user_plan_fees = $user_plan_fees - ((($user_cgst+$user_sgst)/100)*$user_plan_fees); 
-            
+        $joind = strtotime($joind);  
         ?>
-        
         <div style="font-size: 1.2em;">Leon Maestro De Fitness</div>
         <div style="padding-top:10px;font-size: 1em;">No 36, 1st Floor<br />Arogyapa Layout</div>
         <div style="padding-top:10px;font-size: 1em;">1234567891 </div>
@@ -72,12 +82,19 @@
         <div style="padding-top:10px;font-size: 1em;"><a href="mailto:company@example.com">company@example.com</a></div>
       </div>
       <div id="project" style="font-size: 0.2em;">
-        <div style="padding-top:10px;"><span>CLIENT</span><span  style="padding-left:30%;"><?php echo $name; ?></span></div>
-        <div style="padding-top:10px;"><span>ADDRESS</span><span style="padding-left:30%;"><?php echo $address; ?></span></div>
-        <div style="padding-top:10px;"><span>EMAIL</span><a href="mailto:john@example.com"><span style="padding-left:30%;"><?php echo $mail; ?></span></a></div>
-        <div style="padding-top:10px;"><span>PHONE</span><span  style="padding-left:30%;"><?php echo $phone; ?></span></div>
-        <div style="padding-top:10px;"><span>JOINING DATE</span><span style="padding-left:30%;"><?php echo $joind; ?></span></div>
-        <div style="padding-top:10px;"><span>DUE DATE</span><span style="padding-left:30%;"><?php echo $user_due; ?></span></div>
+          <div style="padding-top:10px;font-size:5px;"><span>Member Details</span></div>
+          
+        <div style="padding-top:10px;"><span style="width:120px;text-align:left">CLIENT</span><span style="width:120px;text-align:left"><?php echo $name; ?></span></div>
+          
+        <div style="padding-top:10px;"><span style="width:120px;text-align:left">ADDRESS</span><span style="width:120px;text-align:left"><?php echo $address; ?></span></div>
+          
+        <div style="padding-top:10px;"><span style="width:120px;text-align:left">EMAIL</span><a href="mailto:john@example.com"><span style="width:120px;text-align:left"><?php echo $mail; ?></span></a></div>
+          
+        <div style="padding-top:10px;"><span style="width:120px;text-align:left">PHONE</span><span  style="width:120px;text-align:left"><?php echo $phone; ?></span></div>
+          
+        <div style="padding-top:10px;"><span style="width:120px;text-align:left">JOINING DATE</span><span style="width:120px;text-align:left"><?php echo date('d', $joind)."th ".date('M', $joind)." ".date('y', $joind)  ?></span></div>
+          
+        <div style="padding-top:10px;"><span style="width:120px;text-align:left">DUE DATE</span><span style="width:120px;text-align:left"><?php echo $user_due; ?></span></div>
       </div>
     </header>
     <main>
@@ -117,19 +134,32 @@
       </table>
       <div id="notices">
         <div style="font-size:1.5em;">Terms and Conditions</div>
-        <div class="notice" style=" padding-top:18px;">1. Subject to Bangalore Jurisdication.</div>
-        <div class="notice"  style=" padding-top:18px;">2. Subject to terms and conditions.</div>
-        <div class="notice"  style=" padding-top:18px;">3. We have no refund policy</div>
-        <div class="notice"  style=" padding-top:18px;">4. Mangement reserves the right to admission.</div>
-        <div class="notice" style=" padding-top:18px;">5. No disputes or argument will be entertained without showing a valid recipt.</div>
-        <div class="notice" style=" padding-top:18px;">6. Cheque dishoner charges will be applicable incase of a bounce cheque.</div>
-        <div class="notice" style=" padding-top:18px;">7. Payment done for product service can not be adjusted against another product package/service</div>
-        <div class="notice" style=" padding-top:18px;">8. The membership is Non transferable to any other individual/agent/instituion</div>
-        <div class="notice" style=" padding-top:18px;">9. In case of cheques, please iisue cheques favouring Leon Maestro De Fitness</div>
+        <div class="notice" style=" padding-top:9px;">1. Subject to Bangalore Jurisdication.</div>
+        <div class="notice"  style=" padding-top:9px;">2. Subject to terms and conditions.</div>
+        <div class="notice"  style=" padding-top:9px;">3. We have no refund policy</div>
+        <div class="notice"  style=" padding-top:9px;">4. Mangement reserves the right to admission.</div>
+        <div class="notice" style=" padding-top:9px;">5. No disputes or argument will be entertained without showing a valid recipt.</div>
+        <div class="notice" style=" padding-top:9px;">6. Cheque dishoner charges will be applicable incase of a bounce cheque.</div>
+        <div class="notice" style=" padding-top:9px;">7. Payment done for product service can not be adjusted against another product package/service</div>
+        <div class="notice" style=" padding-top:9px;">8. The membership is Non transferable to any other individual/agent/instituion</div>
+        <div class="notice" style=" padding-top:9px;">9. In case of cheques, please iisue cheques favouring Leon Maestro De Fitness</div>
       </div>
+        <br>
+<!--        <button onClick="window.print()" class="">Download</button>-->
+       <hr>
+      <div id="company" class="clearfix">
+        
+    
+        <div style="padding-top:10px;font-size: 1.2em;text-weight:bold;">FOR LEON MAESTRO DE FITNESS</div>
+        <div style="padding-top:80px;font-size: 1.5em;">Ajay Kumar </div>
+        <div style="padding-top:10px;font-size: 1.2em;">Authorized Signatory</div>
+
+      </div>
+      <div id="project" style="font-size: 0.2em;">
+    
+          <div style="padding-top:100px;font-size:4px;font-weight:bold;"><span>Signature of the memeber</span></div>          
+      </div>    
     </main>
-    <footer>
-      Invoice was created on a computer and is valid without the signature and seal.
-    </footer>
+      <br>  
   </body>
 </html>

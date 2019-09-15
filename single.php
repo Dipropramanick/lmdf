@@ -59,7 +59,7 @@ include "includes/Comment_header.php";
 		<li class="breadcrumb-item">
 			<a href="index.php">Home</a>
 		</li>
-		<li class="breadcrumb-item active" aria-current="page">Add Client</li>
+		<li class="breadcrumb-item active" aria-current="page">Post</li>
 	</ol>
 </div>
 <!-- //page details -->
@@ -89,12 +89,12 @@ include "display_content.php";
             </div>-->
 
 <?php
+include "comment.php";
+?>
+<?php
 include "display_comment.php";
 ?>
 
-<?php
-include "comment.php";
-?>
 
 
         </div>

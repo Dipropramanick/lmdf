@@ -104,10 +104,10 @@
         </div>
         <div class="row">
           <div class="col-lg-6">
-            <a href="login.php" class="btn btn-warning" style="width:100%;padding:100px;"><span class="fa fa-edit"></span> Blog</a>&nbsp;
+            <a href="blog.php" class="btn btn-warning" style="width:100%;padding:100px;"><span class="fa fa-edit"></span> Blog</a>&nbsp;
           </div>
           <div class="col-lg-6">
-            <a href="login.php" class="btn btn-danger" style="width:100%;padding:100px;"><span class="fa fa-trash"></span> Delete Blogs/Comments</a>&nbsp;
+            <a href="user_blog.php" class="btn btn-danger" style="width:100%;padding:100px;"><span class="fa fa-trash"></span> Delete Blogs/Comments</a>&nbsp;
           </div>
         </div>
       <?php }else if(isset($_SESSION['login']) && $_SESSION['user_type'] == "sales") {?>
@@ -134,6 +134,9 @@
       <div class="row">
         <div class="col-lg-6">
           <a href="about_trainer.php" class="btn btn-warning" style="width:100%;padding:100px;"><span class="fa fa-address-card"></span>&nbsp;About Trainer</a>&nbsp;
+        </div>
+        <div class="col-lg-6">
+          <a href="invoice.php?id=<?php echo $_SESSION['userid'];?>" class="btn btn-primary" style="width:100%;padding:100px;">Invoice</a>&nbsp;
         </div>
         <div class="col-lg-6">
           <a href="login.php" class="btn btn-danger" style="width:100%;padding:100px;">Attendance</a>&nbsp;

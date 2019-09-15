@@ -110,14 +110,12 @@
             <th>Plan Name</th>
             <th>Plan Category</th>
             <th>Price</th>
-            <th>Invoice</th>
           </tr>
 
           <tr ng-repeat="plans in planList | filter:planSearch" style="cursor:pointer;" ng-click="planClick(plans)">
             <td >{{plans.name}}</td>
             <td>{{plans.category}}</td>
             <td>{{plans.price}}</td>
-            <td><a href="https://www.google.com" target="_blank">PDF</a> </td>
           </tr>
 </table>
 </div>

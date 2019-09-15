@@ -70,9 +70,9 @@
   							<a href="#">Plans <span class="fa fa-angle-down" aria-hidden="true"></span></a>
   							<input type="checkbox" id="drop-3"/>
   							<ul class="inner-dropdown">
-  								<li><a href="services.html">Plan Category</a></li>
-                  <li><a href="single.html">Add Plan</a></li>
-  								<li><a href="single.html">Edit/Delete Plan</a></li>
+  								<li><a href="plan_category.php">Plan Category</a></li>
+                                <li><a href="plan_add.php">Add Plan</a></li>
+  								<li><a href="plan.php">Edit/Delete Plan</a></li>
   							</ul>
   							</li>
 
@@ -81,8 +81,8 @@
   							<a href="#">Client <span class="fa fa-angle-down" aria-hidden="true"></span></a>
   							<input type="checkbox" id="drop-4"/>
   							<ul class="inner-dropdown">
-  								<li><a href="services.html">Add Client</a></li>
-                  <li><a href="single.html">Edit/Delete Client</a></li>
+  								<li><a href="user_add.php">Add Client</a></li>
+                  <li><a href="user.php">Edit/Delete Client</a></li>
   							</ul>
   							</li>
                 <li class="mr-lg-3 mr-2"><a href="dashboard.php">Dashboard</a></li>
@@ -102,9 +102,9 @@
               <!-- ============================= SALES NAVBAR ====================================== -->
               <?php }else if(isset($_SESSION['login']) && $_SESSION['user_type'] == "sales"){?>
               <li class="mr-lg-3 mr-2"><a >Welcome, <?php session_start(); echo $_SESSION['username']; ?></a></li>
-							<li class="mr-lg-3 mr-2"><a href="login.php">Add Client</a></li>
-              <li class="mr-lg-3 mr-2"><a href="contact.php">Edit/Delete Client</a></li>
-              <li class="mr-lg-3 mr-2"><a href="contact.php">Attendance</a></li>
+							<li class="mr-lg-3 mr-2"><a href="user_add.php">Add Client</a></li>
+              <li class="mr-lg-3 mr-2"><a href="user.php">Edit/Delete Client</a></li>
+              <li class="mr-lg-3 mr-2"><a href="attendance.php">Attendance</a></li>
               <li class="mr-lg-3 mr-2"><a href="dashboard.php">Dashboard</a></li>
               <li class="mr-lg-3 mr-2 p-0">
   							<label for="drop-2" class="toggle">Blog <span class="fa fa-angle-down" aria-hidden="true"></span> </label>
@@ -121,8 +121,8 @@
               <!-- ============================= TRAINER NAVBAR ====================================== -->
             <?php }else if(isset($_SESSION['login']) && $_SESSION['user_type'] == "trainer"){?>
               <li class="mr-lg-3 mr-2"><a >Welcome, <?php session_start(); echo $_SESSION['username']; ?></a></li>
-              <li class="mr-lg-3 mr-2"><a href="login.php">My Clients</a></li>
-              <li class="mr-lg-3 mr-2"><a href="contact.php">Attendance</a></li>
+              <li class="mr-lg-3 mr-2"><a href="about_client.php">My Clients</a></li>
+              <li class="mr-lg-3 mr-2"><a href="attendance.php">Attendance</a></li>
               <li class="mr-lg-3 mr-2"><a href="dashboard.php">Dashboard</a></li>
               <li class="mr-lg-3 mr-2 p-0">
   							<label for="drop-2" class="toggle">Blog <span class="fa fa-angle-down" aria-hidden="true"></span> </label>
@@ -137,8 +137,8 @@
               <!-- ============================= //TRAINER NAVBAR ====================================== -->
             <?php }else if(isset($_SESSION['login']) && $_SESSION['user_type'] == "user"){?>
               <li class="mr-lg-3 mr-2"><a >Welcome, <?php session_start(); echo $_SESSION['username']; ?></a></li>
-              <li class="mr-lg-3 mr-2"><a href="login.php">My Trainer</a></li>
-              <li class="mr-lg-3 mr-2"><a href="contact.php">Attendance</a></li>
+              <li class="mr-lg-3 mr-2"><a href="about_trainer.php">My Trainer</a></li>
+              <li class="mr-lg-3 mr-2"><a href="attendance.php">Attendance</a></li>
               <li class="mr-lg-3 mr-2 p-0">
   							<label for="drop-2" class="toggle">Blog <span class="fa fa-angle-down" aria-hidden="true"></span> </label>
   							<a href="#">Blog <span class="fa fa-angle-down" aria-hidden="true"></span></a>

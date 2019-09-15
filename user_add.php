@@ -70,12 +70,14 @@
             <div class="contact-w3pvt-form mt-5">
                 <form class="w3layouts-contact-fm" method="post">
                   <p style="color:red;">{{error}}</p>
+<!--
                   <div class="row">
                     <div class="col-lg-6">
                       <label for="">Profile Picture:&nbsp;&nbsp;</label>
                       <input id="inp1" type="file" accept="image/*" value="capture/upload image" capture="camera" onchange="loadFiles1(event)"/>
                     </div>
                   </div>
+-->
                   <div class="row">
                     <div class="col-sm-12">
                       <img id="out1" style="margin:auto;margin-left:40%;height:200px;width:200px;display:none;border-radius:50%;">
@@ -91,7 +93,7 @@
                             <div class="col-lg-6">
                             <div class="form-group">
                                 <label for="name">Name</label>
-                                <input class="form-control" type="text" ng-model="name" name="Name" id="name" placeholder="Enter Employee Name" >
+                                <input class="form-control" type="text" ng-model="name" name="Name" id="name" placeholder="Enter Client Name" >
                             </div>
                         </div>
                         </div>

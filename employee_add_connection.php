@@ -98,19 +98,13 @@
     $stimein = $request->stimein;
     $stimeout = $request->stimeout;
     $sch = $request->sch;
-    $profile = $request->profile;
-    // $img = explode(";base64,", $profile);
-    // $image_base64 = base64_decode($img[1]);
-    // echo $image_base64;
-    $sql = "INSERT INTO employee (id,name,phone,email,type,salary,dob,joind,verification,password,ftimein,ftimeout,stimein,stimeout,sch,pic)
-    VALUES ($id,'$name','$phone','$email','$type',$salary,'$dob','$joind','$verification','$password','$ftimein','$ftimeout','$stimein','$stimeout',$sch,'$profile')";
+
+    $sql = "INSERT INTO employee (id,name,phone,email,type,salary,dob,joind,verification,password,ftimein,ftimeout,stimein,stimeout,sch)
+    VALUES ($id,'$name','$phone','$email','$type',$salary,'$dob','$joind','$verification','$password','$ftimein','$ftimeout','$stimein','$stimeout',$sch)";
     $result = $conn->query($sql);
-    // echo mysqli_error($conn);
-    // echo "hello ".$profile;
     echo mysqli_error($conn);
     $sql = "INSERT INTO login (id,password,type) VALUES ($id,'$password','$type')";
     $result = $conn->query($sql);
-    // echo mysqli_error($conn);
     echo "success";
     exit();
   }

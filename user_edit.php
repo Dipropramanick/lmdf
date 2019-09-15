@@ -70,11 +70,33 @@
             <div class="contact-w3pvt-form mt-5">
                 <form class="w3layouts-contact-fm" method="post">
                   <p style="color:red;">{{error}}</p>
+                                     <?php
+
+include 'db.php';
+
+    $id = $_GET['id'];
+    $sql = "SELECT pic from user WHERE id=$id";
+    $result = $conn->query($sql);
+    if ($result->num_rows > 0) {
+        while($row = $result->fetch_assoc()) {
+            $pic = $row['pic'];
+        }
+    }
+    $pic = str_replace(' ','%20',$pic);
+    $img = "profile_images/".$pic;
+ ?>
+
                   <div class="row">
-                    <div class="col-lg-6">
-                      <label for="">Profile Picture:&nbsp;&nbsp;</label>
-                      <input id="inp1" type="file" accept="image/*" value="capture/upload image" capture="camera" onchange="loadFiles1(event)"/>
+                    <div class="col-sm-12">
+                      <img id="out" src="<?php echo $img;?>" style="margin:auto;margin-left:40%;height:200px;width:200px;border-radius:50%;">
                     </div>
+                    <br>                      
+                  </div>
+                                        <div class="row">
+                    <div class="col-sm-12">
+                        <br>
+                      <a class="btn btn-block btn-primary" href="user_profile.php?id={{id}}">Update profile pic</a>
+                    </div>  
                   </div>
                   <div class="row">
                     <div class="col-sm-12">

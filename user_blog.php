@@ -68,24 +68,24 @@
     <section class="services py-5" id="services">
         <div class="container py-md-5">
 		<h3 class="heading text-center mb-3 mb-sm-5">Blogs</h3>
-            <div class="row ab-info">
+            
     
                        
             <?php
         session_start();
         $userid = $_SESSION['userid'];
-        $query = "SELECT * FROM posts WHERE user_id={$userid}";
+        $query = "SELECT * FROM posts WHERE user_id={$userid} ORDER BY post_id DESC";
         $select_all_posts = mysqli_query($connect,$query);
         while($row = mysqli_fetch_assoc($select_all_posts)){
             $post_id = $row['post_id'];
             $post_title = $row['post_title'];
             $post_image = $row['post_image'];  
         ?>
-        
-            <div class="col-md-6 ab-content ab-content1">
+        <div class="row ab-info">
+            <div class="col-md-12 ab-content ab-content1">
                     <div class="ab-content-inner">
                        
-                        <?php echo "<a href='single.php?c_id={$post_id}'>"?><img src="images/<?php echo $post_image; ?>" alt="news image" class="img-fluid"></a>
+                        <?php echo "<a href='single.php?c_id={$post_id}'>"?><img src="blog_images/<?php echo $post_image; ?>" alt="news image" class="img-fluid" style="max-height:300px;max-width:300px;"></a>
                         <div class="ab-info-con">
                                                    
                             <h4><?php echo $post_title ?></h4>
@@ -97,11 +97,12 @@
                         </div> 
                     </div>
                 </div>
+                        </div>
+
                 <?php          }
 
      ?>
 
-            </div>
 </section>
     <!-- //banner-botttom -->
 

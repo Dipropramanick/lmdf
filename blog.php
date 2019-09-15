@@ -53,7 +53,7 @@
 <div class="breadcrumb-agile">
 	<ol class="breadcrumb mb-0">
 		<li class="breadcrumb-item">
-			<a href="index.html">Home</a>
+			<a href="index.php">Home</a>
 		</li>
 		<li class="breadcrumb-item active" aria-current="page">Blog</li>
 	</ol>
@@ -64,29 +64,32 @@
     <section class="services py-5" id="services">
         <div class="container py-md-5">
 		<h3 class="heading text-center mb-3 mb-sm-5">Blogs</h3>
-            <div class="row ab-info">
+            
     
                        
             <?php
 
-        $query = "SELECT * FROM posts";
+        $query = "SELECT * FROM posts ORDER BY post_id DESC";
         $select_all_posts = mysqli_query($connect,$query);
+        if(mysqli_num_rows($select_all_posts) == 0){
+            echo "<h1 align='center'>There are no posts added.</h1>";
+        }
         while($row = mysqli_fetch_assoc($select_all_posts)){
             $post_id = $row['post_id'];
             $post_title = $row['post_title'];
             $post_image = $row['post_image'];  
         ?>
-        
-            <div class="col-md-6 ab-content ab-content1">
+            <div class="row ab-info container">
+            <div class="col-md-12 ab-content ab-content1">
                     <div class="ab-content-inner">
                        
-                        <?php echo "<a href='single.php?c_id={$post_id}'>"?><img src="images/<?php echo $post_image; ?>" alt="news image" class="img-fluid"></a>
+                        <?php echo "<a href='single.php?c_id={$post_id}'>"?><img src="blog_images/<?php echo $post_image; ?>" alt="news image" class="img-fluid" style="height:300px;width:300px;"></a>
                         <div class="ab-info-con">
                                                    
                             <h4><?php echo $post_title ?></h4>
                             
                             
-                          <a href="single.php" class="read-more two btn m-0 px-3"><span class="fa fa-arrow-circle-o-right"> </span></a>
+                          <a href="single.php?c_id=<?php echo $post_id;?>" class="read-more two btn m-0 px-3"><span class="fa fa-arrow-circle-o-right"> </span></a>
                          <?php session_start(); if($_SESSION['login'] == 1 && $_SESSION['user_type'] == "admin")  { ?>
                          <?php echo "<a href='blog.php?delete=$post_id'>Delete</a>"?>
                          <?php  deletePosts();?> 
@@ -94,11 +97,13 @@
                         </div> 
                     </div>
                 </div>
+                        </div>
+        <br><br>
+
                 <?php          }
 
      ?>
 
-            </div>
 </section>
     <!-- //banner-botttom -->
 

@@ -1,12 +1,9 @@
 <?php
   error_reporting(0);
- session_start();
+  session_start();
   if($_SESSION['login'] != 1){
-    header("Location:login.php");
+    header("Location:dashboard.php");
   }
-?>
-<?php
-include "includes/header.php";
 ?>
 <!DOCTYPE html>
 <html lang="zxx">
@@ -15,7 +12,7 @@ include "includes/header.php";
     <!-- Meta tag Keywords -->
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta charset="UTF-8" />
-    <meta name="keywords" content="Leone Maestro De Fitness" />
+    <meta name="keywords" content="Beardo Responsive web template, Bootstrap Web Templates, Flat Web Templates, Android Compatible web template, Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, SonyEricsson, Motorola web design" />
     <script>
         addEventListener("load", function () {
             setTimeout(hideURLbar, 0);
@@ -25,6 +22,7 @@ include "includes/header.php";
             window.scrollTo(0, 1);
         }
     </script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 
     <!-- //Meta tag Keywords -->
     <!-- Custom-Files -->
@@ -39,12 +37,25 @@ include "includes/header.php";
    <link href="//fonts.googleapis.com/css?family=Oswald:200,300,400,500,600,700" rel="stylesheet">
    <link href="//fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i,800,800i" rel="stylesheet">
     <!-- //Fonts -->
+    <script type="text/javascript" src="js/angular.js"></script>
+    <script type="text/javascript" src="js/login.js"></script>
+    <style>
+        .post_img_size{
+            height:300px;
+            width=300px;
+        }
+        .post_img_show{            
+            display:none;
+        }
+        
+    </style>
 </head>
 
 <body>
 
 <!-- header -->
-  <?php include "header.php"?>
+  <?php include "header.php";
+        include "includes/header.php"?>
 <!-- //header -->
 <!-- banner -->
 <section class="inner-page-banner" id="home">
@@ -55,14 +66,14 @@ include "includes/header.php";
 <div class="breadcrumb-agile">
 	<ol class="breadcrumb mb-0">
 		<li class="breadcrumb-item">
-			<a href="index.html">Home</a>
+			<a href="index.php">Home</a>
 		</li>
-		<li class="breadcrumb-item active" aria-current="page">Add Blog</li>
+		<li class="breadcrumb-item active" aria-current="page">Login</li>
 	</ol>
 </div>
 <!-- //page details -->
 <!-- //banner-botttom -->
-    <section class="content-info py-5">
+        <section class="content-info py-5">
         <?php
 
 if(isset($_POST['submit_post'])){
@@ -81,18 +92,18 @@ if(isset($_POST['submit_post'])){
     $_post_date = date('d-m-y');
     $post_comment_count = 0;
 
-    move_uploaded_file($post_image_temp, "images/$post_image");
+    move_uploaded_file($post_image_temp, "blog_images/$post_image");
     session_start();
     $userid = $_SESSION['userid'];
     $username = $_SESSION['username'];
-//    $query = "INSERT INTO posts(post_category_id,post_title, post_author,post_date, post_image, post_content, post_tags,post_comment_count,post_status, user_id)";
-    $query = "INSERT INTO posts(post_title, post_author,post_date, post_image, post_content, post_comment_count, user_id)";
+    
+    $query = "INSERT INTO posts(post_title,post_date, post_image, post_content, post_comment_count, user_id)";
 
-    $query .= "VALUES('{$post_title}','{$username}',now(),'{$post_image}','{$post_content}',{$post_comment_count},{$userid})";
+    $query .= "VALUES('{$post_title}',now(),'{$post_image}','{$post_content}',{$post_comment_count},{$userid})";
 
     $create_post_query = mysqli_query($connect, $query);
 
-    header("Location:user_blog.php");
+    echo "<script>window.location.href='blog.php';</script>";
 
 }
 
@@ -136,9 +147,23 @@ if(isset($_POST['submit_post'])){
 
 
     <div class="form-group">
-    <label for="post_image">Post Image</label>
-    <input type="file" id="fname" name="image">
+    <label for="post_image">Post Image</label><br>
+    <img src="images/ab1.jpg" class="post_img_size post_img_show post_img_load" ><br class="post_img_show"><br class="post_img_show">
+    <input type="file" id="fname" onchange="readURL(this)" name="image">
     </div>
+      <script type="text/javascript">
+          
+            function readURL(input) {
+                $('.post_img_show').show();
+                if (input.files && input.files[0]) {
+                    var reader = new FileReader();
+                    reader.onload = function(e) {
+            $('.post_img_load').attr('src', e.target.result);
+        }
+        reader.readAsDataURL(input.files[0]);
+    }
+    }
+      </script>
 <!--
 
     <div class="form-group">
@@ -165,3 +190,18 @@ if(isset($_POST['submit_post'])){
 
 </body>
 </html>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+

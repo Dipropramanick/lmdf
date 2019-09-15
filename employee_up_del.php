@@ -70,17 +70,43 @@
             <div class="contact-w3pvt-form mt-5">
                 <form class="w3layouts-contact-fm" method="post">
                   <p style="color:red;">{{error}}</p>
+<!--
                   <div class="row">
                     <div class="col-lg-6">
                       <label for="">Profile Picture:&nbsp;&nbsp;</label>
                       <input id="inp" type="file" accept="image/*" value="capture/upload image" onchange="loadFile(event)"/>
                     </div>
                   </div>
+-->
+                    <?php
+
+include 'db.php';
+
+    $id = $_GET['id'];
+    $sql = "SELECT pic from employee WHERE edit=1";
+    $result = $conn->query($sql);
+    if ($result->num_rows > 0) {
+        while($row = $result->fetch_assoc()) {
+            $pic = $row['pic'];
+        }
+    }
+    $pic = str_replace(' ','%20',$pic);
+    $img = "profile_images/".$pic;
+ ?>
+
                   <div class="row">
                     <div class="col-sm-12">
-                      <img id="out" src="abc1.php?id={{id}}" style="margin:auto;margin-left:40%;height:200px;width:200px;border-radius:50%;">
+                      <img id="out" src="<?php echo $img;?>" style="margin:auto;margin-left:40%;height:200px;width:200px;border-radius:50%;">
                     </div>
+                    <br>                      
                   </div>
+                    <div class="row">
+                    <div class="col-sm-12">
+                        <br>
+                      <a class="btn btn-block btn-primary" href="employee_profile.php?id={{id}}">Update profile pic</a>
+                    </div>  
+                  </div>
+                    <br>
                     <div class="row">
                         <div class="col-lg-6">
                             <div class="form-group">

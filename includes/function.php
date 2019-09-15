@@ -12,7 +12,8 @@ function deletePosts()
 
 function updatePosts(){
         global $connect;
-        header("Location: blog.php");
+        
+        header("Location: user_blog.php");
 }
 
 function deleteComments()

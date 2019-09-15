@@ -125,7 +125,6 @@
     $joind = $request->joind;
     $verification = $request->verification;
     $password = $request->password;
-    $profile = $request->profile;
     $sch = $request->sch;
     $ftimein = $request->ftimein;
     $ftimeout = $request->ftimeout;
@@ -136,11 +135,7 @@
     $result = $conn->query($sql);
     $sql = "UPDATE login SET password=$password,type='$type' WHERE id=$id";
     $result = $conn->query($sql);
-    $sql = "UPDATE employee SET pic='$profile'  WHERE id=$id";
     $result = $conn->query($sql);
-    // echo mysqli_error($conn);
-    // echo $profile;
-    // echo "success";
     exit();
   }
 

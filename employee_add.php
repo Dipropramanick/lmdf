@@ -70,12 +70,14 @@
             <div class="contact-w3pvt-form mt-5">
                 <form class="w3layouts-contact-fm" method="post">
                   <p style="color:red;">{{error}}</p>
+<!--
                   <div class="row">
                     <div class="col-lg-6">
                       <label for="">Profile Picture:&nbsp;&nbsp;</label>
                       <input id="inp" type="file" accept="image/*" value="capture/upload image" onchange="loadFile(event)"/>
                     </div>
                   </div>
+-->
                   <div class="row">
                     <div class="col-sm-12">
                       <img id="out" style="margin:auto;margin-left:40%;height:200px;width:200px;display:none;border-radius:50%;">

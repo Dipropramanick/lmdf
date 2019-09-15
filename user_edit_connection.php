@@ -63,7 +63,6 @@ function editUser($conn,$request)
   $emerName = $request->emerName;
   $verification = $request->verification;
   $password = $request->password;
-  // $profile = $request->profile;
   $blood = $request->blood;
   $height = $request->height;
   $weight = $request->weight;
@@ -73,7 +72,6 @@ function editUser($conn,$request)
   $plans = $request->plans;
   $joind = $request->joind;
   $expd = $request->exp;
-  $profile = $request->profile;
   $trainer = $request->trainer;
   $discc = $request->discc;
   $discp = $request->discp;
@@ -82,10 +80,7 @@ function editUser($conn,$request)
   country = '$nationality',verification='$verification',password='$password',blood='$blood',height=$height,weight=$weight,others='$other',planC=$planC,
   plans=$plans,joind='$joind',expd='$expd',trainer=$trainer, discc=$discc, discp=$discp, method=$method WHERE id=$id";
   $result = $conn->query($sql);
-  // $sql = "UPDATE user SET pic='$profile' WHERE id=$id";
-  // $result = $conn->query($sql);
   echo mysqli_error($conn);
-  // echo $profile;
   $sql = "UPDATE login SET password='$password' WHERE id=$id";
   $result = $conn->query($sql);
   // echo mysqli_error($conn);
@@ -103,9 +98,6 @@ function delClient($conn,$request)
   $result = $conn->query($sql);
   $sql = "DELETE FROM login WHERE id=$id";
   $result = $conn->query($sql);
-  // echo mysqli_error($conn);
-  // echo $profile;
-  // echo "success";
   exit();
 }
 

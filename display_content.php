@@ -9,7 +9,6 @@ $query = "SELECT * FROM posts WHERE post_id =$the_c_id";
 $select_c_id = mysqli_query($connect,$query);
 while($row = mysqli_fetch_assoc($select_c_id)) {
     $post_id = $row['post_id'];
-    $post_author = $row['post_author'];
     $post_title = $row['post_title'];
     $post_category_id = $row['post_category_id'];
     $post_status = $row['post_status'];
@@ -17,9 +16,19 @@ while($row = mysqli_fetch_assoc($select_c_id)) {
     $post_content = $row['post_content'];
     $post_tags = $row['post_tags'];
     $post_date = $row['post_date'];
+    $user_id = $row['user_id'];
 
 }
-
+include "db.php";
+if($the_c_id <5000){
+    $query = "SELECT name FROM employee WHERE id =$user_id";
+}else{
+    $query = "SELECT name FROM user WHERE id =$user_id";
+}
+$select_c_id = mysqli_query($conn,$query);
+while($row = mysqli_fetch_assoc($select_c_id)) {
+    $post_author = $row['name'];
+}
 
 if(isset($_SERVER['HTTPS']) &&
       $_SERVER['HTTPS'] === 'on')
@@ -44,7 +53,7 @@ $wlink .= "?c_id={$the_c_id}";
 ?>
 <div class="content-sing-w3ls px-lg-5">
 
-                    <center><img class="img-fluid" src="images/<?php echo $post_image;?>" alt=""></center>
+                    <center><img class="img-fluid" style="max-height:400px;max-width:400px;" src="blog_images/<?php echo $post_image;?>" alt=""></center>
                     <center><h2><?php echo $post_title?></h2></center>
                     <center><h3>Posted By:-<?php echo $post_author?></h3></center>
                     <center><h4>Posted On:<?php echo $post_date?></h4></center>
