@@ -66,7 +66,7 @@
       <div class="container" style="border: 1px solid black;padding:20px;margin-top:15px; ">
         <div class="" style="display: flex;">
           <div class="">
-            <img src="abc1.php?id={{trainerList.id}}" alt="" style="margin-left:auto;margin-right: auto;margin-top: 20px;height:100px;width:100px;border-radius:50%;">
+            <img src="profile_images/{{ trainerList.pic }}" alt="" style="margin-left:auto;margin-right: auto;margin-top: 20px;height:100px;width:100px;border-radius:50%;">
           </div>
           <div class="" style="padding-left:20px;padding-top:30px;">
             <h4>{{ trainerList.name }}</h4>

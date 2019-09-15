@@ -21,6 +21,7 @@
         $obj = new stdClass();
         $obj->id = $row['id'];
         $obj->name = $row['name'];
+        $obj->pic = $row['pic']  ;
         $arr[$count] = $obj;
         $count = $count + 1;
       }

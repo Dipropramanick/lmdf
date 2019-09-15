@@ -29,6 +29,7 @@
         $obj->id = $row['id'];
         $obj->name = $row['name'];
         $obj->phone = $row['phone'];
+        $obj->pic = $row['pic'];
         $obj->email = $row['email'];
       }
   }
