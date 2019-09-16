@@ -161,15 +161,26 @@
 		<div class="row pricing-grids">
 			<div class="col-lg-6  mb-lg-0 mb-5">
 				<div class="padding">
-					 <h3>PRICES FOR WEIGHT TRAINING</h3>
+					 <h3>RATE CARD</h3>
 					<!-- Item starts -->
-					<div class="menu-item">
+                    <div class="menu-item">
 						<div class="row border-dot no-gutters">
 							<div class="col-8 menu-item-name">
-								<h6>Plan 1</h6>
+								<h6>PLAN <br>&nbsp;</h6>
 							</div>
 							<div class="col-4 menu-item-price text-right">
-								<h6>₹7</h6>
+								<h6>AMOUNT</h6>
+							</div>
+						</div>
+                        
+					</div>
+					<div class="menu-item mt-4">
+						<div class="row border-dot no-gutters">
+							<div class="col-8 menu-item-name">
+								<h6>1 MONTH</h6>
+							</div>
+							<div class="col-4 menu-item-price text-right">
+								<h6>₹2200</h6>
 							</div>
 						</div>
 
@@ -179,10 +190,10 @@
 					<div class="menu-item my-4">
 						<div class="row border-dot no-gutters">
 							<div class="col-8 menu-item-name">
-								<h6>Plan 2</h6>
+								<h6>2 MONTHS</h6>
 							</div>
 							<div class="col-4 menu-item-price text-right">
-								<h6>₹10</h6>
+								<h6>₹3250</h6>
 							</div>
 						</div>
 					</div>
@@ -191,10 +202,10 @@
 					<div class="menu-item">
 						<div class="row border-dot no-gutters">
 							<div class="col-8 menu-item-name">
-								<h6>Plan 3</h6>
+								<h6>3 MONTHS + 1 MONTH</h6>
 							</div>
 							<div class="col-4 menu-item-price text-right">
-								<h6>₹15</h6>
+								<h6>₹5250</h6>
 							</div>
 						</div>
 
@@ -204,10 +215,20 @@
 					<div class="menu-item mt-4">
 						<div class="row border-dot no-gutters">
 							<div class="col-8 menu-item-name">
-								<h6>Plan 4</h6>
+								<h6>3 MONTHS + 3 MONTHS</h6>
 							</div>
 							<div class="col-4 menu-item-price text-right">
-								<h6>₹15</h6>
+								<h6>₹6900</h6>
+							</div>
+						</div>
+					</div>
+                    <div class="menu-item mt-4">
+						<div class="row border-dot no-gutters">
+							<div class="col-8 menu-item-name">
+								<h6>6 MONTHS + 6 MONTHS</h6>
+							</div>
+							<div class="col-4 menu-item-price text-right">
+								<h6>₹8900</h6>
 							</div>
 						</div>
 					</div>
@@ -217,57 +238,117 @@
 			</div>
 			<div class="col-lg-6  mb-lg-0 mb-5">
 				<div class="padding">
-					<h3>PRICES FOR ZUMBA</h3>
+					<h3>OFFERS</h3>
 					<!-- Item starts -->
 					<div class="menu-item">
 						<div class="row border-dot no-gutters">
-							<div class="col-8 menu-item-name">
-								<h6>Plan 1</h6>
+							<div class="col-3 menu-item-name">
+								<h6>PLAN</h6>
 							</div>
-							<div class="col-4 menu-item-price text-right">
-								<h6>₹27</h6>
+                            <div class="col-3 menu-item-name">
+								<h6>ACTUAL DAYS</h6>
 							</div>
-						</div>
-
-					</div>
-					<!-- Item ends -->
-					<!-- Item starts -->
-					<div class="menu-item my-4">
-						<div class="row border-dot no-gutters">
-							<div class="col-8 menu-item-name">
-								<h6>Plan 2</h6>
+                            <div class="col-3 menu-item-name">
+								<h6>MANDATORY DAYS</h6>
 							</div>
-							<div class="col-4 menu-item-price text-right">
-								<h6>₹21</h6>
+							<div class="col-3 menu-item-price text-right">
+								<h6>FREE DAYS</h6>
 							</div>
 						</div>
 
-					</div>
-					<!-- Item ends -->
-					<!-- Item starts -->
-					<div class="menu-item">
-						<div class="row border-dot no-gutters">
-							<div class="col-8 menu-item-name">
-								<h6>Plan 3</h6>
-							</div>
-							<div class="col-4 menu-item-price text-right">
-								<h6>₹25</h6>
-							</div>
-						</div>
 					</div>
 					<!-- Item ends -->
 					<!-- Item starts -->
 					<div class="menu-item mt-4">
 						<div class="row border-dot no-gutters">
-							<div class="col-8 menu-item-name">
-								<h6>Plan 4</h6>
+							<div class="col-3 menu-item-name">
+								<h6>1 MONTH</h6>
 							</div>
-							<div class="col-4 menu-item-price text-right">
-								<h6>₹28</h6>
+                            <div class="col-3 menu-item-name">
+								<h6>30 DAYS</h6>
+							</div>
+                            <div class="col-3 menu-item-name">
+								<h6>26 DAYS</h6>
+							</div>
+							<div class="col-3 menu-item-price text-right">
+								<h6>7 DAYS</h6>
 							</div>
 						</div>
+
 					</div>
 					<!-- Item ends -->
+					<!-- Item starts -->
+					<div class="menu-item mt-4">
+						<div class="row border-dot no-gutters">
+							<div class="col-3 menu-item-name">
+								<h6>2 MONTH</h6>
+							</div>
+                            <div class="col-3 menu-item-name">
+								<h6>60 DAYS</h6>
+							</div>
+                            <div class="col-3 menu-item-name">
+								<h6>50 DAYS</h6>
+							</div>
+							<div class="col-3 menu-item-price text-right">
+								<h6>14 DAYS</h6>
+							</div>
+						</div>
+                    </div>
+					<!-- Item ends -->
+					<!-- Item starts -->
+		
+					<!-- Item ends -->
+                    <div class="menu-item mt-4">
+						<div class="row border-dot no-gutters">
+							<div class="col-3 menu-item-name">
+								<h6>4 MONTH</h6>
+							</div>
+                            <div class="col-3 menu-item-name">
+								<h6>120 DAYS</h6>
+							</div>
+                            <div class="col-3 menu-item-name">
+								<h6>110 DAYS</h6>
+							</div>
+							<div class="col-3 menu-item-price text-right">
+								<h6>30 DAYS</h6>
+							</div>
+						</div>
+                    </div>
+                    
+                    			<div class="menu-item mt-4">
+						<div class="row border-dot no-gutters">
+							<div class="col-3 menu-item-name">
+								<h6>6 MONTH</h6>
+							</div>
+                            <div class="col-3 menu-item-name">
+								<h6>180 DAYS</h6>
+							</div>
+                            <div class="col-3 menu-item-name">
+								<h6>160 DAYS</h6>
+							</div>
+							<div class="col-3 menu-item-price text-right">
+								<h6>45 DAYS</h6>
+							</div>
+						</div>
+                        </div>
+                    
+                    			<div class="menu-item mt-4">
+						<div class="row border-dot no-gutters">
+							<div class="col-3 menu-item-name">
+								<h6>1 YEAR</h6>
+							</div>
+                            <div class="col-3 menu-item-name">
+								<h6>364 DAYS</h6>
+							</div>
+                            <div class="col-3 menu-item-name">
+								<h6>333 DAYS</h6>
+							</div>
+							<div class="col-3 menu-item-price text-right">
+								<h6>60 DAYS</h6>
+							</div>
+						</div>
+                        </div>
+                    
 				</div>
 			</div>
 
@@ -281,7 +362,7 @@
             <div class="test-info text-center">
                 <h3 class="tittle order" style="color:red;">
                     <span>CALL US FOR ANY QUERIES</span>Our team will contact back immediately to clear queries</h3>
-                <h4 class="tittle my-2">987654321</h4>
+                <h4 class="tittle my-2">9886781967</h4>
 
                 <div class="read-more mx-auto m-0 text-center">
                     <a href="contact.php" class="read-more scroll btn" >Click here</a> </div>

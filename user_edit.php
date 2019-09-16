@@ -535,11 +535,11 @@ include 'db.php';
                                   <div class="row">
                                       <div class="col-lg-6">
                                         <label for="join">Date Of Joining</label>
-                                        <input class="form-control" type="date" min="1" name="join" id="join" placeholder="Enter Date of Birth" ng-model="joind" style="height:57px;" ng-change="pChange()">
+                                        <input class="form-control" type="date" min="1" name="join" id="join" placeholder="Enter Date of Birth" ng-model="joind" style="height:57px;" ng-change="pChange1()">
                                       </div>
                                         <div class="col-lg-6">
                                           <label for="exp">Date Of Expiry</label>
-                                            <input class="form-control" type="date" min="1" name="exp" id="exp" placeholder="Enter Date of Birth" ng-model="exp" style="height:57px;" disabled>
+                                            <input class="form-control" type="date" name="exp" id="exp" placeholder="Enter Date of Birth" ng-model="exp" style="height:57px;" ng-change="expChange()">
                                           </div>
                                       </div>
 

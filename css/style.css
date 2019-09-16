@@ -1260,7 +1260,7 @@ subscribe form {
 /* footer */
 
 .footer-content {
-    background: url(../images/banner2.jpg) center no-repeat;
+    background: url(../images/footer_img.jpg) center no-repeat;/*../images/banner2.jpg*/
     -webkit-background-size: cover;
     -moz-background-size: cover;
     -o-background-size: cover;

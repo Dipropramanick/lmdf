@@ -351,7 +351,8 @@ userApp.controller('userCtrl', function($scope, $http) {
 var userEditApp = angular.module("userEditApp", []);
 
 userEditApp.controller('userEditCtrl', function($scope, $http) {
-
+  let change = 1;    
+  let expd = ""
   let url = window.location.href;
   let params = (new URL(url)).searchParams;
   let url_id = params.get('id');
@@ -392,6 +393,8 @@ userEditApp.controller('userEditCtrl', function($scope, $http) {
     $scope.discp = Number(response.data[0].discp);
     $scope.discc = Number(response.data[0].discc);
     $scope.method = response.data[0].method;
+    $scope.exp = new Date(response.data[0].expd);
+    expd = response.data[0].expd;
     planCG = response.data[0].planC;
     plansG = response.data[0].plans;
     trG = response.data[0].trainer;
@@ -438,7 +441,7 @@ userEditApp.controller('userEditCtrl', function($scope, $http) {
   }, function myError(response) {
     alert("Try again later");
   });
-
+  $scope.exp = new Date(expd);
   var config2 = {
     method : "POST",
     url : "user_add_connection.php",
@@ -658,12 +661,19 @@ userEditApp.controller('userEditCtrl', function($scope, $http) {
             break;
           }
         }
-        $scope.pChange();
+        $scope.pChange1();
       }
     }, function myError(response) {
       alert("Try again later");
     });
   }
+  
+  
+  $scope.pChange1 = function(){
+      change = 0;
+      $scope.pChange();
+  }
+  
   $scope.pChange = function () {
     var yrs = $scope.plans.years;
     var months = $scope.plans.months;
@@ -671,10 +681,15 @@ userEditApp.controller('userEditCtrl', function($scope, $http) {
     dt.setDate( dt.getDate() - 1);
     dt.setMonth( dt.getMonth() + Number(months) );
     dt.setYear( dt.getFullYear() + Number(yrs));
-    $scope.exp = dt;
+    if(change === 1){
+        $scope.exp = new Date(expd);
+    }else{
+        $scope.exp = dt;
+    } 
     $scope.price = Number($scope.plans.price);
     $scope.discpFun();
   }
+  
   $scope.trainerChange = function () {
     var arr = [];
     var in1 = new Date($scope.trainer.ftimein)

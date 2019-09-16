@@ -22,6 +22,8 @@
             }
         </script>
         <br>
+      <h6>Date - </h6>    
+      <h6>Invoice Number - </h6>    
       <h1>INVOICE</h1>
       <div id="company" class="clearfix">
         
@@ -46,6 +48,13 @@
             $user_paid =$row['discc'];
             $user_payment_num = $row['method'];
         }
+          
+        $query = "SELECT * FROM employee WHERE id=$trainer";
+        $get_trainer = mysqli_query($conn,$query);
+        while($row = mysqli_fetch_assoc($get_trainer))
+        {      
+            $trainer_name = $row['name'];
+        }  
         if($user_payment_num == 0){
             $user_payment = "Cash";
         } else if($user_payment_num == 1){
@@ -73,18 +82,23 @@
         }
         $user_total =$user_plan_fees;  
         $user_plan_fees = $user_plan_fees - ((($user_cgst+$user_sgst)/100)*$user_plan_fees); 
-        $joind = strtotime($joind);  
+        $joind = strtotime($joind); 
+        $expd = strtotime($expd)  
         ?>
         <div style="font-size: 1.2em;">Leon Maestro De Fitness</div>
         <div style="padding-top:10px;font-size: 1em;">No 36, 1st Floor<br />Arogyapa Layout</div>
         <div style="padding-top:10px;font-size: 1em;">1234567891 </div>
-        <div style="padding-top:10px;font-size: 1em;">Trainer's name -<?php echo $trainer; ?></div>
+        <div style="padding-top:10px;font-size: 1em;">Client Representative -<?php echo $trainer_name; ?></div>
         <div style="padding-top:10px;font-size: 1em;"><a href="mailto:company@example.com">company@example.com</a></div>
       </div>
       <div id="project" style="font-size: 0.2em;">
           <div style="padding-top:10px;font-size:5px;"><span>Member Details</span></div>
+    
+                
+        <div style="padding-top:10px;"><span style="width:120px;text-align:left">CLIENT ID</span><span style="width:120px;text-align:left"><?php echo $user_id; ?></span></div>  
           
-        <div style="padding-top:10px;"><span style="width:120px;text-align:left">CLIENT</span><span style="width:120px;text-align:left"><?php echo $name; ?></span></div>
+          
+        <div style="padding-top:10px;"><span style="width:120px;text-align:left">CLIENT NAME</span><span style="width:120px;text-align:left"><?php echo $name; ?></span></div>  
           
         <div style="padding-top:10px;"><span style="width:120px;text-align:left">ADDRESS</span><span style="width:120px;text-align:left"><?php echo $address; ?></span></div>
           
@@ -92,9 +106,9 @@
           
         <div style="padding-top:10px;"><span style="width:120px;text-align:left">PHONE</span><span  style="width:120px;text-align:left"><?php echo $phone; ?></span></div>
           
-        <div style="padding-top:10px;"><span style="width:120px;text-align:left">JOINING DATE</span><span style="width:120px;text-align:left"><?php echo date('d', $joind)."th ".date('M', $joind)." ".date('y', $joind)  ?></span></div>
+        <div style="padding-top:10px;"><span style="width:120px;text-align:left">JOINING DATE</span><span style="width:120px;text-align:left"><?php  echo date('d', $joind)."th ".date('M', $joind)." ".date('y', $joind)  ?></span></div>
           
-        <div style="padding-top:10px;"><span style="width:120px;text-align:left">DUE DATE</span><span style="width:120px;text-align:left"><?php echo $user_due; ?></span></div>
+        <div style="padding-top:10px;"><span style="width:120px;text-align:left">EXPIRY DATE</span><span style="width:120px;text-align:left"><?php echo date('d', $expd)."th ".date('M', $expd)." ".date('y', $expd); ?></span></div>
       </div>
     </header>
     <main>
@@ -102,6 +116,7 @@
         <thead>
           <tr>
             <th class="desc">Plan Type</th>
+            <th class="desc">Plan Name</th>  
             <th>Plan Fees</th>
             <th>Environmental Fees</th>
             <th>SGST</th>
@@ -112,6 +127,7 @@
         <tbody>
           <tr>
             <td class="service"><?php echo $planC;?></td>
+              <td class="service"><?php echo $planC;?></td>
             <td class="desc"><center><?php echo $user_plan_fees;?></center></td>
               <td class="unit"><center><?php echo $user_env_fees;?></center></td>
               <td class="qty"><center><?php echo $user_cgst; ?></center></td>
@@ -119,15 +135,15 @@
               <td class="total"><center><?php echo $user_total; ?></center></td>
           </tr>
           <tr>
-            <td colspan="5">PAID AMOUNT</td>
+            <td colspan="6">PAID AMOUNT</td>
             <td class="total"><center><?php echo $user_paid;?></center></td>
           </tr>
           <tr>
-            <td colspan="5">DUE AMOUNT</td>
+            <td colspan="6">DUE AMOUNT</td>
             <td class="total"><center><?php echo $user_due;?></center></td>
           </tr>
           <tr>
-            <td colspan="5" class="grand total">PAYMENT MODE</td>
+            <td colspan="6" class="grand total">PAYMENT MODE</td>
             <td class="grand total"><center><?php echo $user_payment;?></center></td>
           </tr>
         </tbody>

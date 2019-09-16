@@ -60,12 +60,12 @@ License URL: http://creativecommons.org/licenses/by/3.0/
                             <hr>
                             <ul class="list-info-w3pvt last-w3ls-contact mt-lg-4">
                                 <li>
-                                    <p> Mon - Sat: 06.00 am - 11.00 pm</p>
+                                    <p> Mon - Sat: 05.00 am - 11.00 pm</p>
 
                                 </li>
 
                                 <li class="my-2">
-                                    <p>Sunday: 08.00 am - 10.00 pm</p>
+                                    <p>Sunday: 10.00 am - 10.00 pm</p>
 
                                 </li>
 
@@ -79,11 +79,11 @@ License URL: http://creativecommons.org/licenses/by/3.0/
                             <hr>
                             <div class="last-w3ls-contact">
                                 <p>
-                                    <a href="mailto:example@email.com">info@example.com</a>
+                                    <a href="mailto:example@email.com">leonmaestrodefitness@gmail.com</a>
                                 </p>
                             </div>
                             <div class="last-w3ls-contact my-2">
-                                <p>+91 987654321</p>
+                                <p>+91 9886781967</p>
                             </div>
                             <div class="last-w3ls-contact">
                                 <p>No 36, 1st Floor, Arogyapa Layout,

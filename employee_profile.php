@@ -18,7 +18,7 @@
     <!-- Meta tag Keywords -->
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta charset="UTF-8" />
-    <meta name="keywords" content="Leon Maestro de Fitness" />
+    <meta name="keywords" content="Beardo Responsive web template, Bootstrap Web Templates, Flat Web Templates, Android Compatible web template, Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, SonyEricsson, Motorola web design" />
     <script>
         addEventListener("load", function () {
             setTimeout(hideURLbar, 0);
@@ -63,15 +63,15 @@
 		<li class="breadcrumb-item">
 			<a href="index.php">Home</a>
 		</li>
-		<li class="breadcrumb-item active" aria-current="page">Add Employee</li>
+		<li class="breadcrumb-item active" aria-current="page">Add Client</li>
 	</ol>
 </div>
 <!-- //page details -->
 <!-- //banner-botttom -->
-    <section class="content-info py-5" ng-app="employeeAddApp" ng-controller="employeeAddCtrl">
+    <section class="content-info py-5">
         <div class="container py-md-5">
             <div class="text-center px-lg-5">
-                <h3 class="heading text-center mb-3 mb-sm-5">Employee Profile Picture</h3>
+                <h3 class="heading text-center mb-3 mb-sm-5">Client Profile Picture</h3>
 
             </div>
             <?php
@@ -81,12 +81,13 @@
                             $info = getimagesize($_FILES['image']['tmp_name']);
     
                             if ($info === FALSE) {
+                                echo "<script>alert('ONOP');</script>";                                                             
                                 echo "<script>window.location.href='employee_profile.php?id=$id'</script>";
                             }else{
                                 $profileImageName = $_FILES['image']['name'];
                                 $target = 'profile_images/'.$profileImageName;
                                 move_uploaded_file($_FILES['image']['tmp_name'],$target);
-                                $sql = "UPDATE EMPLOYEE SET pic='$profileImageName' WHERE id=$id";
+                                $sql = "UPDATE employee SET pic='$profileImageName' WHERE id=$id";
                                 $result = $conn->query($sql);
                                 echo "<script>window.location.href='employee.php'</script>";
                             }
