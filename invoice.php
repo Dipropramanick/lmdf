@@ -67,6 +67,7 @@
         while($row = mysqli_fetch_assoc($select_all_posts))
         {
             $planC = $row['category'];
+            $plans = $row['name'];
             $user_env_fees = 0;
             $user_plan_fees =$row['price'];
             $user_due = 0;
@@ -127,7 +128,7 @@
         <tbody>
           <tr>
             <td class="service"><?php echo $planC;?></td>
-              <td class="service"><?php echo $planC;?></td>
+              <td class="service"><?php echo $plans;?></td>
             <td class="desc"><center><?php echo $user_plan_fees;?></center></td>
               <td class="unit"><center><?php echo $user_env_fees;?></center></td>
               <td class="qty"><center><?php echo $user_cgst; ?></center></td>

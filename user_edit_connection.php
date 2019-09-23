@@ -138,6 +138,60 @@ function phoneCheck($conn,$request)
 }
 
 
+function getPlanOriginalPrice($conn,$request){
+    $pid = $request->pc;
+    $sql = "SELECT price from plan WHERE id=$pid";
+    $result = $conn->query($sql);
+    $abc = 0; 
+//    if ($result->num_rows > 0) {
+        while($row = $result->fetch_assoc()) {
+            echo  $row['price'];
+      }
+//  }
+//    echo $abc;
+}
+
+function upgradePlan($conn,$request){
+    $id = $request->id;
+    $planC = $request->planC;
+    $plans = $request->plans;
+    $joind = $request->joind;
+    $exp = $request->exp;
+    $discp = $request->discp;
+    $discc = $request->discc;
+    $method = $request->method;
+    $trainer = $request->trainer;
+    $sql = "UPDATE user SET planC=$planC,plans=$plans,joind='$joind',expd='$exp',discp=$discp,discc=$discc,method=$method,trainer='$trainer' WHERE id=$id";
+    $date = date('d-m-Y');
+    $month = date('m');
+    $year = date('Y');
+    $result = $conn->query($sql);
+    $sql = "INSERT INTO payments (reason,userid,date,month,year) VALUES ('upgrade',$id,'$date',$month,$year)";
+    $result = $conn->query($sql);
+    echo $date;
+}
+
+
+function renewPlan($conn,$request){
+    $id = $request->id;
+    $planC = $request->planC;
+    $plans = $request->plans;
+    $joind = $request->joind;
+    $exp = $request->exp;
+    $discp = $request->discp;
+    $discc = $request->discc;
+    $method = $request->method;
+    $trainer = $request->trainer;
+    $sql = "UPDATE user SET planC=$planC,plans=$plans,joind='$joind',expd='$exp',discp=$discp,discc=$discc,method=$method,trainer=$trainer WHERE id=$id";
+    $date = date('d-m-Y');
+    $month = date('m');
+    $year = date('Y');
+    $result = $conn->query($sql);
+    $sql = "INSERT INTO payments (reason,userid,date,month,year) VALUES ('renewal',$id,'$date',$month,$year)";
+    $result = $conn->query($sql);
+    echo "success";
+}
+
 $post = file_get_contents('php://input');
 $request = json_decode($post);
 $fun = $request->fun;
@@ -152,6 +206,12 @@ if($fun == "getClient"){
 }
 elseif ($fun == "phoneCheck") {
   phoneCheck($conn,$request);
+}else if($fun == "getPlanOriginalPrice"){
+  getPlanOriginalPrice($conn,$request);  
+}else if($fun == "upgradePlan"){
+  upgradePlan($conn,$request);  
+}else if($fun == "renewPlan"){
+  renewPlan($conn,$request);  
 }
 
 

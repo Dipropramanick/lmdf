@@ -351,6 +351,9 @@ userApp.controller('userCtrl', function($scope, $http) {
 var userEditApp = angular.module("userEditApp", []);
 
 userEditApp.controller('userEditCtrl', function($scope, $http) {
+  $scope.options = "0";
+  $scope.ctcfin = 0;
+  let pid = 0;
   let change = 1;    
   let expd = ""
   let url = window.location.href;
@@ -397,6 +400,7 @@ userEditApp.controller('userEditCtrl', function($scope, $http) {
     expd = response.data[0].expd;
     planCG = response.data[0].planC;
     plansG = response.data[0].plans;
+    pid = plansG;
     trG = response.data[0].trainer;
     // console.log(trG);
   }, function myError(response) {
@@ -409,10 +413,32 @@ userEditApp.controller('userEditCtrl', function($scope, $http) {
   var phoneCheck = 0;
   var passCheck = 0;
 
+  
+  $scope.optionsChange = function(){
+      var edit = document.querySelector(".user_edit");
+      
+      if($scope.options == "0"){
+          document.querySelector(".user_edit").style.display = "block";
+          document.querySelector(".user_upgrade").style.display = "none";
+          document.querySelector(".user_renewal").style.display = "none";
+          document.location.href = "user_edit.php?id="+$scope.id;
+      }
+      else if($scope.options == "1"){
+          document.querySelector(".user_edit").style.display = "none";
+          document.querySelector(".user_upgrade").style.display = "block";
+          document.querySelector(".user_renewal").style.display = "none";
+      }
+      else{
+          document.querySelector(".user_edit").style.display = "none";
+          document.querySelector(".user_upgrade").style.display = "none";
+          document.querySelector(".user_renewal").style.display = "block";
+          $scope.joind_renew = new Date();
+          $scope.pChange_renew();
+      }
+  }
 
-
-
-
+//$scope.optionsChange();
+ 
 
   var config1 = {
     method : "POST",
@@ -423,7 +449,8 @@ userEditApp.controller('userEditCtrl', function($scope, $http) {
   }
   var request1 = $http(config1);
   request1.then(function mySuccess(response) {
-    // console.log(response.data);
+//     console.log(response.data);
+      console.log(planCG)
     if (response.data == "failed") {
       alert("Please add plan category to continue");
     }else {
@@ -487,6 +514,30 @@ userEditApp.controller('userEditCtrl', function($scope, $http) {
       $scope.discpError = "Please Enter A Valid Discount";
       $scope.discp = 0;
       $scope.discpFun();
+    }
+  }
+  
+  
+   $scope.discpFun_up = function() {
+    if ($scope.discp_up <= 100) {
+      $scope.discc_up = $scope.ctcfin - (($scope.ctcfin * $scope.discp_up)/100);
+//      $scope.discpError = "";
+    }else {
+//      $scope.discpError = "Please Enter A Valid Discount";
+      $scope.discp_up = 0;
+      $scope.discpFun_up();
+    }
+  }
+
+  $scope.disccFun_up = function() {
+    if ($scope.discc_up <= $scope.ctcfin) {
+      // $scope.discc = $scope.price - (($scope.price * $scope.discp)/100);
+      $scope.discp_up = Number(Number((($scope.ctcfin-$scope.discc_up)/$scope.ctcfin)*100).toFixed(2));
+//      $scope.discpError = "";
+    }else {
+//      $scope.discpError = "Please Enter A Valid Discount";
+      $scope.discp_up = 0;
+      $scope.discpFun_up();
     }
   }
 
@@ -661,7 +712,7 @@ userEditApp.controller('userEditCtrl', function($scope, $http) {
             break;
           }
         }
-        $scope.pChange1();
+        $scope.pChange()
       }
     }, function myError(response) {
       alert("Try again later");
@@ -669,6 +720,9 @@ userEditApp.controller('userEditCtrl', function($scope, $http) {
   }
   
   
+   
+   
+ 
   $scope.pChange1 = function(){
       change = 0;
       $scope.pChange();
@@ -688,6 +742,41 @@ userEditApp.controller('userEditCtrl', function($scope, $http) {
     } 
     $scope.price = Number($scope.plans.price);
     $scope.discpFun();
+  }
+  
+  $scope.pChange_renew = function () {
+    var yrs = $scope.plans.years;
+    var months = $scope.plans.months;
+    var dt = new Date($scope.joind_renew);
+    dt.setDate( dt.getDate() - 1);
+    dt.setMonth( dt.getMonth() + Number(months) );
+    dt.setYear( dt.getFullYear() + Number(yrs));
+    $scope.exp_renew = dt;
+    $scope.price = Number($scope.plans.price);
+    $scope.discpFun();
+  }
+  
+  $scope.ctc = function(){
+//      alert(pid)
+      let curPrice = 0;
+      var getPrice_config = {
+      method : "POST",
+      url : "user_edit_connection.php",
+      data : {
+        "fun" : "getPlanOriginalPrice",
+        "pc" : pid
+      }
+    }
+    var request1 = $http(getPrice_config);
+    request1.then(function mySuccess(response) {
+      curPrice = Number(response.data);
+      $scope.ctcfin = $scope.price - curPrice;
+      $scope.discp_up = 0;
+      $scope.discpFun_up();
+    }, function myError(response) {
+      alert("Try again later");
+    });
+     
   }
   
   $scope.trainerChange = function () {
@@ -727,5 +816,72 @@ userEditApp.controller('userEditCtrl', function($scope, $http) {
     }
   }
 
+  $scope.userUpgradeClick = function(){
+      if($scope.ctcfin <=100){
+          alert("Please enter valid plan for upgrading.");
+      }else{
+        var upgrade_config = {
+            method : "POST",
+            url : "user_edit_connection.php",
+            data : {
+                "fun" : "upgradePlan",
+                "id" : $scope.id,
+                "planC" : $scope.planC.id,
+                "plans" : $scope.plans.id,
+                "joind" : $scope.joind,
+                "exp" : $scope.exp,
+                "discp": $scope.discp_up,
+                "discc" : $scope.discc_up,
+                "method" : $scope.method_up
+            }
+        }
+    var request1 = $http(upgrade_config);
+    request1.then(function mySuccess(response) {
+      console.log(response)
+    }, function myError(response) {
+      alert("Try again later");
+    });
+
+      }
+  }
+  
+   $scope.userRenewClick = function(){
+      var res = confirm("Are you sure to renew?");
+      if(res == true){
+           var chk = 0;     
+           var config1 = {
+               method : "POST",
+            url : "user_edit_connection.php",
+            data : {
+                "fun" : "renewPlan",
+                "id" : $scope.id,
+                "planC" : $scope.planC.id,
+                "plans" : $scope.plans.id,
+                "joind" : $scope.joind_renew,
+                "exp" : $scope.exp_renew,
+                "discp": $scope.discp,
+                "discc" : $scope.discc,
+                "method" : $scope.method,
+                "trainer" : $scope.trainer.id
+            }
+           }
+         var request1 = $http(config1);
+         request1.then(function mySuccess(response) {     
+            if(response.data == "success"){
+                alert("Renewed Successfully")
+                window.location.href = "user_edit.php?id=" + $scope.id;
+                chk = 1;
+            }else{
+                alert("Contact Developers.")
+            }
+         }, function myError(response) {
+            alert("Try again later");
+        });
+          if(chk == 0){
+            alert("Please fill all the details.")
+       }
+      }
+       
+  }
 
 });

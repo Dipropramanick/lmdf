@@ -62,7 +62,24 @@
 <!-- //page details -->
 <!-- //banner-botttom -->
     <section class="content-info py-5" ng-app="userEditApp" ng-controller="userEditCtrl">
+        
         <div class="container py-md-5">
+                <div class="row">
+                        <div class="col-lg-12">
+                            <div class="form-group">
+                                <label for="type">Options:</label>
+                                <select style="" id="type" class="form-control" ng-model="options" ng-change="optionsChange()">
+                                  <option value="0" style="height:57px;">Edit/Extension</option>
+                                  <option value="1" style="height:57px;">Upgrade</option>
+                                  <option value="2" style="height:57px;">Renewal</option>
+                                </select>
+                            </div>
+                        </div>
+                </div>
+        </div>
+        
+        <!--   USER EDIT       -->
+        <div class="container py-md-5 user_edit">
             <div class="text-center px-lg-5">
                 <h3 class="heading text-center mb-3 mb-sm-5">Edit Client</h3>
                 <p>All fields are compulsory</p>
@@ -628,6 +645,215 @@ include 'db.php';
                 </form>
             </div>
         </div>
+        <!--// USER EDIT       -->
+        
+        <!--  USER UPGRADE    -->
+        <div class="container py-md-5 user_upgrade">
+            <h1>Upgrade Plan</h1><br>
+                                                    <div class="row">
+                                          <div class="col-lg-6">
+                                          <div class="form-group">
+                                              <label for="planC">Plan Category</label>
+                                              <select style="" id="planC" class="form-control" ng-options="pc.category for pc in planCList" ng-model="planC" ng-change="pcChange()"   >
+                                              </select>
+                                          </div>
+                                      </div>
+                                      <div class="col-lg-6">
+                                      <div class="form-group">
+                                          <label for="plan">Plan Name</label>
+                                          <select style="" id="plan" class="form-control" ng-options="i.name for i in planList" ng-model="plans" ng-change="pChange1();ctc();">
+                                          </select>
+                                      </div>
+                                  </div>
+
+                                  </div>
+
+                                  <div class="row">
+                                      <div class="col-lg-6">
+                                        <label for="join">Date Of Joining</label>
+                                        <input class="form-control" type="date" min="1" name="join" id="join" placeholder="Enter Date of Birth" ng-model="joind" style="height:57px;" ng-change="pChange1()"disabled>
+                                      </div>
+                                        <div class="col-lg-6">
+                                          <label for="exp">Date Of Expiry</label>
+                                            <input class="form-control" type="date" name="exp" id="exp" placeholder="Enter Date of Birth" ng-model="exp" style="height:57px;" ng-change="expChange()" disabled>
+                                          </div>
+                                      </div>
+            <br>
+             <div class="row">
+                        <div class="col-lg-6">
+                            <div class="form-group">
+                                <label for="userid">Price of the plan</label>
+                                <input class="form-control" type="number" min="1" name="Name" id="userid" placeholder="Enter Price of the Plan" ng-model="price" disabled>
+                            </div>
+                          </div>
+                            <div class="col-lg-6">
+                            <div class="form-group">
+                                <label for="name">Cost to the customer</label>
+                                <input class="form-control" type="id" ng-model="ctcfin" name="Name" id="name" placeholder=" Total Cost to the customer" >
+                            </div>
+                        </div>
+                        </div>
+             <div class="row">
+                              <div class="col-lg-12">
+                                <div class="text-center px-lg-5">
+                                    <h4 class="heading text-center mb-3 mb-sm-5">Payment</h4>
+                                </div>
+                              </div>
+                          </div>
+
+                          <div class="row">
+                              <div class="col-lg-12">
+                                <div class="form-group">
+                                    <label for="discp">Discount Percent%</label>
+                                    <p style="color:red;">{{discpError}}</p>
+                                    <input class="form-control" type="number"  name="discp" id="discp" placeholder="Discount Percentage" step="any" ng-model="discp_up" style="height:57px;" ng-change="discpFun_up()">
+                                </div>
+                              </div>
+                          </div>
+
+                          <div class="row">
+                              <div class="col-lg-12">
+                                <div class="form-group">
+                                    <label for="discc">Cost to the Client</label>
+                                    <input class="form-control" type="number"  name="discc" id="discc" placeholder="Cost to the Client" ng-model="discc_up" style="height:57px;" ng-change="disccFun_up()">
+                                </div>
+                              </div>
+                          </div>
+
+                          <div class="row">
+                              <div class="col-lg-12">
+                                <div class="form-group">
+                                    <label>Payment: </label><br>
+                                    <label for="no">
+                                    <input type="radio" id="no" name="sch" ng-model="method_up" value="0" style="height:20px;">Cash</label>&nbsp;&nbsp;&nbsp;&nbsp;
+                                    <label for="one">
+                                    <input type="radio" id="one" name="sch" ng-model="method_up" value="1" style="height:20px;">Credit/Debit Card</label>&nbsp;&nbsp;&nbsp;&nbsp;
+                                    <label for="two">
+                                    <input type="radio" id="two" name="sch" ng-model="method_up" value="2" style="height:20px;">Cheque/UPI/Other</label>&nbsp;&nbsp;&nbsp;&nbsp;
+                                </div>
+                                </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-lg-12">
+                                            <button ng-click="userUpgradeClick()" class="btn submit btn-block" style="background-color:red;">Upgrade Plan</button>
+                                      </div>
+                                </div>
+
+        </div>
+        <!--// USER UPGRADE        -->
+        
+        <!-- USER RENEWAL        -->
+        <div class="container py-md-5 user_renewal">
+                                        <h1>Renewal</h1>
+                                        <p style="color:red;">{{planError}}</p>
+                                        <div class="row">
+                                          <div class="col-lg-6">
+                                          <div class="form-group">
+                                              <label for="planC">Plan Category</label>
+                                              <select style="" id="planC" class="form-control" ng-options="pc.category for pc in planCList" ng-model="planC" ng-change="pcChange()">
+                                              </select>
+                                          </div>
+                                      </div>
+                                      <div class="col-lg-6">
+                                      <div class="form-group">
+                                          <label for="plan">Plan Name</label>
+                                          <select style="" id="plan" class="form-control" ng-options="i.name for i in planList" ng-model="plans" ng-change="pChange_renew()">
+                                          </select>
+                                      </div>
+                                  </div>
+
+                                  </div>
+
+                                  <div class="row">
+                                      <div class="col-lg-6">
+                                        <label for="join">Date Of Joining</label>
+                                        <input class="form-control" type="date" min="1" name="join" id="join" placeholder="Enter Date of Birth" ng-model="joind_renew" style="height:57px;" ng-change="pChange_renew()">
+                                      </div>
+                                        <div class="col-lg-6">
+                                          <label for="exp">Date Of Expiry</label>
+                                            <input class="form-control" type="date" name="exp" id="exp" placeholder="Enter Date of Birth" ng-model="exp_renew" style="height:57px;"  disabled>
+                                          </div>
+                                      </div>
+
+
+                                      <div class="row">
+                                        <div class="col-lg-6">
+                                        <div class="form-group">
+                                            <label for="trainer">Trainer</label>
+                                            <select style="" id="trainer" class="form-control" ng-options="tr.name for tr in trainerList" ng-model="trainer" style="height:57px;" ng-change="trainerChange()">
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                    <div class="form-group">
+                                        <label for="time">Session StartTime</label>
+                                        <select style="" id="plan" class="form-control" ng-options="ti for ti in timeList" ng-model="ftimin" style="height:57px;">
+                                        </select>
+                                    </div>
+                                </div>
+                                </div>
+
+                                <div class="row">
+                                  <div class="col-lg-12">
+                                  <div class="form-group">
+                                      <label for="price">Final Price</label>
+                                      <input class="form-control" type="number"  name="price" id="price" value="5000" placeholder="Final Price" ng-model="price" style="height:57px;" disabled>
+                                  </div>
+                              </div>
+
+                          </div>
+
+
+
+                          <div class="row">
+                              <div class="col-lg-12">
+                                <div class="text-center px-lg-5">
+                                    <h4 class="heading text-center mb-3 mb-sm-5">Payment</h4>
+                                </div>
+                              </div>
+                          </div>
+
+                          <div class="row">
+                              <div class="col-lg-12">
+                                <div class="form-group">
+                                    <label for="discp">Discount Percent%</label>
+                                    <p style="color:red;">{{discpError}}</p>
+                                    <input class="form-control" type="number"  name="discp" id="discp" placeholder="Discount Percentage" step="any" ng-model="discp" style="height:57px;" ng-change="discpFun()">
+                                </div>
+                              </div>
+                          </div>
+
+                          <div class="row">
+                              <div class="col-lg-12">
+                                <div class="form-group">
+                                    <label for="discc">Cost to the Client</label>
+                                    <input class="form-control" type="number"  name="discc" id="discc" placeholder="Cost to the Client" ng-model="discc" style="height:57px;" ng-change="disccFun()">
+                                </div>
+                              </div>
+                          </div>
+
+                          <div class="row">
+                              <div class="col-lg-12">
+                                <div class="form-group">
+                                    <label>Payment: </label><br>
+                                    <label for="no">
+                                    <input type="radio" id="no" name="sch" ng-model="method" value="0" style="height:20px;">Cash</label>&nbsp;&nbsp;&nbsp;&nbsp;
+                                    <label for="one">
+                                    <input type="radio" id="one" name="sch" ng-model="method" value="1" style="height:20px;">Credit/Debit Card</label>&nbsp;&nbsp;&nbsp;&nbsp;
+                                    <label for="two">
+                                    <input type="radio" id="two" name="sch" ng-model="method" value="2" style="height:20px;">Cheque/UPI/Other</label>&nbsp;&nbsp;&nbsp;&nbsp;
+                                </div>
+                                </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-lg-12">
+                                            <button ng-click="userRenewClick()" class="btn submit btn-block" style="background-color:red;">Renew</button>
+                                      </div>
+                                </div>
+        </div>
+        <!--// USER RENEWAL        -->
+        
     </section>
     <!-- //banner-botttom -->
 <script type="text/javascript">
