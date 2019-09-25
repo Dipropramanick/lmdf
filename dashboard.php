@@ -128,7 +128,11 @@
           <div class="col-lg-6">
             <a href="user.php" class="btn btn-danger" style="width:100%;padding:100px;">Attendance</a>&nbsp;
           </div>
+        <div class="col-lg-6">
+            <a href="pt_view.php" class="btn btn-primary" style="width:100%;padding:100px;">Personal Trainees</a>&nbsp;
+          </div>
         </div>
+            
 
     <?php }else if(isset($_SESSION['login']) && $_SESSION['user_type'] == "user") {?>
       <div class="row">
