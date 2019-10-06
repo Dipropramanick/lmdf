@@ -1,7 +1,7 @@
 <?php
   error_reporting(0);
   session_start();
-  if($_SESSION['login'] == 0){
+  if($_SESSION['login'] == 0 || $_SESSION['user_type'] == "trainer" || $_SESSION['user_type'] == "user"){
     header("Location:index.php");
   }
 ?>
@@ -38,6 +38,31 @@
     <!-- //Fonts -->
     <script type="text/javascript" src="js/angular.js"></script>
     <script type="text/javascript" src="js/user.js"></script>
+    <style>
+      #customers {
+        font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+        border-collapse: collapse;
+        width: 100%;
+
+      }
+
+      #customers td, #customers th {
+        border: 1px solid #ddd;
+        padding: 8px;
+      }
+
+      #customers tr:nth-child(even){background-color: #f2f2f2;}
+
+      #customers tr:hover {background-color: #ddd;}
+
+      #customers th {
+        padding-top: 12px;
+        padding-bottom: 12px;
+        text-align: left;
+        background-color: #4CAF50;
+        color: white;
+      }
+    </style>
 </head>
 
 <body>
@@ -72,6 +97,7 @@
                                   <option value="0" style="height:57px;">Edit/Extension</option>
                                   <option value="1" style="height:57px;">Upgrade</option>
                                   <option value="2" style="height:57px;">Renewal</option>
+                                  <option value="3" style="height:57px;">Payment History</option>    
                                 </select>
                             </div>
                         </div>
@@ -588,6 +614,12 @@ include 'db.php';
 
                           </div>
 
+                        <div class="row">
+                                    <div class="col-lg-12">
+                                        <input type="checkbox" name="pt" id="pt" ng-model="pt"> <label for="pt">Personal Training?</label><br>
+                                    </div>
+                                </div>
+                        <br>
 
 
                           <div class="row">
@@ -719,7 +751,31 @@ include 'db.php';
                                 </div>
                               </div>
                           </div>
-
+                        
+                        <div class="row">
+                              <div class="col-lg-12">
+                                <div class="form-group">
+                                    <label for="apc">Amount Paid by the Client</label>
+                                    <input class="form-control" type="number"  name="apc" id="apc" placeholder="Amount Paid by the Client" ng-model="apc_up" style="height:57px;" ng-change="apcFun_up()">
+                                </div>
+                              </div>
+                          </div>
+                    
+                    <div class="row">
+                              <div class="col-lg-12">
+                                <div class="form-group">
+                                    <label for="due_up">Due Amount</label>
+                                    <input class="form-control" type="number"  name="due_up" id="due" placeholder="Due Amount" ng-model="due_up" style="height:57px;" disabled>
+                                </div>
+                              </div>
+                          </div>
+                    <div class="row">
+                                      <div class="col-lg-12">
+                                        <label for="dued">Due Payment Date(if applicable)</label>
+                                        <input class="form-control" type="date" min="1" name="dued" id="dued" placeholder="Enter Date of Birth" ng-model="dued" style="height:57px;" >
+                                      </div>
+                    </div>            
+            
                           <div class="row">
                               <div class="col-lg-12">
                                 <div class="form-group">
@@ -831,6 +887,29 @@ include 'db.php';
                                 </div>
                               </div>
                           </div>
+                        <div class="row">
+                              <div class="col-lg-12">
+                                <div class="form-group">
+                                    <label for="apc">Amount Paid by the Client</label>
+                                    <input class="form-control" type="number"  name="apc" id="apc" placeholder="Amount Paid by the Client" ng-model="apc" style="height:57px;" ng-change="apcFun()">
+                                </div>
+                              </div>
+                          </div>
+                    
+                    <div class="row">
+                              <div class="col-lg-12">
+                                <div class="form-group">
+                                    <label for="due">Due Amount</label>
+                                    <input class="form-control" type="number"  name="due" id="due" placeholder="Due Amount" ng-model="due" style="height:57px;" disabled>
+                                </div>
+                              </div>
+                          </div>
+                    <div class="row">
+                                      <div class="col-lg-12">
+                                        <label for="dued">Due Payment Date(if applicable)</label>
+                                        <input class="form-control" type="date" min="1" name="dued" id="dued" placeholder="Enter Date of Birth" ng-model="dued" style="height:57px;" >
+                                      </div>
+                    </div>
 
                           <div class="row">
                               <div class="col-lg-12">
@@ -853,7 +932,27 @@ include 'db.php';
                                 </div>
         </div>
         <!--// USER RENEWAL        -->
-        
+        <div style="height:500px;overflow-y:scroll;" class="user_payments">
+        <table id="customers">
+          <tr >
+            <th>Payment Reason</th>
+            <th>Plan Category</th>
+            <th>Plan Term</th>
+            <th>Amount Paid</th>
+            <th>Status</th>
+            <th>Invoice</th>
+          </tr>
+
+          <tr ng-repeat="usr in userList" style="cursor:pointer;">
+            <td>{{usr.reason}}</td>
+            <td>{{usr.planC}}</td>
+            <td>{{usr.plans}}</td>
+            <td>{{usr.apc}}</td>
+            <td>{{usr.status}}</td>
+            <td><a href="invoice.php?inv={{usr.invoice}}&id={{usr.id}}">Invoice</a></td>
+          </tr>
+</table>
+</div>
     </section>
     <!-- //banner-botttom -->
 <script type="text/javascript">

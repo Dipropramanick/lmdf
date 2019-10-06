@@ -1,7 +1,7 @@
 <?php
   error_reporting(0);
   session_start();
-  if($_SESSION['login'] == 0 || !($_SESSION['user_type'] == "admin") ){
+  if($_SESSION['login'] == 0 || !($_SESSION['user_type'] == "admin")){
     header("Location:index.php");
   }
 ?>
@@ -35,9 +35,10 @@
     <!-- /Fonts -->
    <link href="//fonts.googleapis.com/css?family=Oswald:200,300,400,500,600,700" rel="stylesheet">
    <link href="//fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i,800,800i" rel="stylesheet">
+
     <!-- //Fonts -->
     <script type="text/javascript" src="js/angular.js"></script>
-    <script type="text/javascript" src="js/employee.js"></script>
+    <script type="text/javascript" src="js/due.js"></script>
     <style>
       #customers {
         font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
@@ -81,12 +82,12 @@
 		<li class="breadcrumb-item">
 			<a href="index.php">Home</a>
 		</li>
-		<li class="breadcrumb-item active" aria-current="page">Employees</li>
+		<li class="breadcrumb-item active" aria-current="page">Due Payments</li>
 	</ol>
 </div>
 <!-- //page details -->
 <!-- //banner-botttom -->
-    <section class="content-info py-5" ng-app="employeeApp" ng-controller="employeeCtrl">
+    <section class="content-info py-5" ng-app="dueApp" ng-controller="dueCtrl">
       <div class="container">
         <div class="contact-w3pvt-form mt-5">
             <form class="w3layouts-contact-fm" method="post">
@@ -95,7 +96,7 @@
                         <div class="form-group search">
                             <label for="userid">Search Employee</label>
                             <!-- <span class="fa fa-search"></span> -->
-                            <input class="form-control" type="text"  name="Name" id="userid" placeholder="Enter UserId/Name/Mobile/Type" ng-model="empSearch">
+                            <input class="form-control" type="text"  name="Name" id="userid" placeholder="Enter UserId/Name/Mobile/Train" ng-model="usrSearch">
                         </div>
                     </div>
                 </div>
@@ -109,20 +110,20 @@
             <th>ID</th>
             <th>Name</th>
             <th>Mobile</th>
-            <th>Type</th>
+            <th>Due_Amount</th>
+            <th>Expiry</th>
           </tr>
 
-          <tr ng-repeat="emp in empList | filter:empSearch" style="cursor:pointer;" ng-click="empClick(emp)">
-            <td >{{emp.id}}</td>
-            <td>{{emp.name}}</td>
-            <td>{{emp.phone}}</td>
-            <td>{{emp.type}}</td>
+          <tr ng-repeat="usr in userList | filter:usrSearch" style="cursor:pointer;" ng-click="userClick(usr)">
+            <td ng-style="expStyle(usr)">{{usr.id}}</td>
+            <td ng-style="expStyle(usr)">{{usr.name}}</td>
+            <td ng-style="expStyle(usr)">{{usr.phone}}</td>
+            <td ng-style="expStyle(usr)">{{usr.due}}</td>
+            <td ng-style="expStyle(usr)">{{usr.expd}}</td>
           </tr>
 </table>
 </div>
-    <div class="container">
-      <a href="employee_add.php" class="btn btn-danger btn-block"><span class="fa fa-plus"></span> Add New Employee</a>&nbsp;
-    </div>
+        
     </section>
     <!-- //banner-botttom -->
 

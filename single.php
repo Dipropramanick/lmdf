@@ -1,9 +1,9 @@
 <?php
   error_reporting(0);
   session_start();
-  // if($_SESSION['login'] == 0){
-  //   header("Location:index.php");
-  // }
+   if(empty($_GET)){
+     header("Location:blog.php");
+   }
 ?>
 <?php
 include "includes/Comment_header.php";
@@ -39,8 +39,7 @@ include "includes/Comment_header.php";
    <link href="//fonts.googleapis.com/css?family=Oswald:200,300,400,500,600,700" rel="stylesheet">
    <link href="//fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i,800,800i" rel="stylesheet">
     <!-- //Fonts -->
-    <script type="text/javascript" src="js/angular.js"></script>
-    <script type="text/javascript" src="js/user.js"></script>
+ 
 </head>
 
 <body>

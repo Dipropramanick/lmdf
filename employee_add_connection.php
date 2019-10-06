@@ -106,6 +106,7 @@
     $sql = "INSERT INTO login (id,password,type) VALUES ($id,'$password','$type')";
     $result = $conn->query($sql);
     echo "success";
+    
     exit();
   }
 

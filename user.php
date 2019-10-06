@@ -1,7 +1,7 @@
 <?php
   error_reporting(0);
   session_start();
-  if($_SESSION['login'] == 0){
+  if($_SESSION['login'] == 0 || $_SESSION['user_type'] == "trainer" || $_SESSION['user_type'] == "user"){
     header("Location:index.php");
   }
 ?>
@@ -35,6 +35,7 @@
     <!-- /Fonts -->
    <link href="//fonts.googleapis.com/css?family=Oswald:200,300,400,500,600,700" rel="stylesheet">
    <link href="//fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i,800,800i" rel="stylesheet">
+
     <!-- //Fonts -->
     <script type="text/javascript" src="js/angular.js"></script>
     <script type="text/javascript" src="js/user.js"></script>
@@ -81,7 +82,7 @@
 		<li class="breadcrumb-item">
 			<a href="index.php">Home</a>
 		</li>
-		<li class="breadcrumb-item active" aria-current="page">Employees</li>
+		<li class="breadcrumb-item active" aria-current="page">Members</li>
 	</ol>
 </div>
 <!-- //page details -->
@@ -110,7 +111,6 @@
             <th>Name</th>
             <th>Mobile</th>
             <th>Trainer</th>
-            <th>Invoice</th>
           </tr>
 
           <tr ng-repeat="usr in userList | filter:usrSearch" style="cursor:pointer;" ng-click="userClick(usr)">
@@ -118,7 +118,6 @@
             <td>{{usr.name}}</td>
             <td>{{usr.phone}}</td>
             <td>{{usr.trainer}}</td>
-            <td><a href="invoice.php?id={{usr.id}}">Click here</a></td>
           </tr>
 </table>
 </div>

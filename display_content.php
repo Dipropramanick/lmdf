@@ -6,19 +6,25 @@ if(isset($_GET['c_id'])){
 }
 
 $query = "SELECT * FROM posts WHERE post_id =$the_c_id";
-$select_c_id = mysqli_query($connect,$query);
-while($row = mysqli_fetch_assoc($select_c_id)) {
-    $post_id = $row['post_id'];
-    $post_title = $row['post_title'];
-    $post_category_id = $row['post_category_id'];
-    $post_status = $row['post_status'];
-    $post_image = $row['post_image'];
-    $post_content = $row['post_content'];
-    $post_tags = $row['post_tags'];
-    $post_date = $row['post_date'];
-    $user_id = $row['user_id'];
+$select_c_id = $connect->query($query);
 
+if ($select_c_id->num_rows > 0) {
+    while($row = $select_c_id->fetch_assoc()) {
+        $post_id = $row['post_id'];
+        $post_title = $row['post_title'];
+        $post_category_id = $row['post_category_id'];
+        $post_status = $row['post_status'];
+        $post_image = $row['post_image'];
+        $post_content = $row['post_content'];
+        $post_tags = $row['post_tags'];
+        $post_date = $row['post_date'];
+        $user_id = $row['user_id'];
+
+    }
+}else{
+    echo "<script>window.location.href = 'index.php'</script>";
 }
+
 include "db.php";
 if($the_c_id <5000){
     $query = "SELECT name FROM employee WHERE id =$user_id";

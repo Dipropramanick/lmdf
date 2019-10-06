@@ -1,7 +1,7 @@
 <?php
   error_reporting(0);
   session_start();
-  if($_SESSION['login'] == 0){
+  if($_SESSION['login'] == 0 || $_SESSION['user_type'] == "trainer" || $_SESSION['user_type'] == "user"){
     header("Location:index.php");
   }
 ?>
@@ -83,7 +83,10 @@
                             if ($info === FALSE) {
                                 echo "<script>window.location.href='user_profile.php?id=$id'</script>";
                             }else{
-                                $profileImageName = $_FILES['image']['name'];
+                                $pname = $_FILES['image']['name'];                                
+                                $profileImageName = (string)$id;
+                                $format = explode(".",$pname)[1];
+                                $profileImageName = $profileImageName .".".$format;
                                 $target = 'profile_images/'.$profileImageName;
                                 move_uploaded_file($_FILES['image']['tmp_name'],$target);
                                 $sql = "UPDATE user SET pic='$profileImageName' WHERE id=$id";

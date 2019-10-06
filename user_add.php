@@ -1,7 +1,7 @@
 <?php
   error_reporting(0);
   session_start();
-  if($_SESSION['login'] == 0){
+  if($_SESSION['login'] == 0 || $_SESSION['user_type'] == "trainer" || $_SESSION['user_type'] == "user"){
     header("Location:index.php");
   }
 ?>
@@ -540,18 +540,23 @@
                                     </div>
                                 </div>
                                 </div>
-
+                    
+                                
                                 <div class="row">
                                   <div class="col-lg-12">
-                                  <div class="form-group">
-                                      <label for="price">Final Price</label>
-                                      <input class="form-control" type="number"  name="price" id="price" placeholder="Final Price" ng-model="price" style="height:57px;" disabled>
-                                  </div>
-                              </div>
+                                      <div class="form-group">
+                                        <label for="price">Final Price</label>
+                                        <input class="form-control" type="number"  name="price" id="price" placeholder="Final Price" ng-model="price" style="height:57px;" disabled>
+                                      </div>
+                                 </div>
+                                </div>
 
-                          </div>
-
-
+                        <div class="row">
+                                    <div class="col-lg-12">
+                                        <input type="checkbox" name="pt" id="pt" ng-model="pt" ng-change="ptC()"> <label for="pt">Personal Training?</label><br>
+                                    </div>
+                                </div>
+                        <br>
 
                           <div class="row">
                               <div class="col-lg-12">
@@ -579,7 +584,31 @@
                                 </div>
                               </div>
                           </div>
-
+                    
+                        <div class="row">
+                              <div class="col-lg-12">
+                                <div class="form-group">
+                                    <label for="apc">Amount Paid by the Client</label>
+                                    <input class="form-control" type="number"  name="apc" id="apc" placeholder="Amount Paid by the Client" ng-model="apc" style="height:57px;" ng-change="apcFun()">
+                                </div>
+                              </div>
+                          </div>
+                    
+                    <div class="row">
+                              <div class="col-lg-12">
+                                <div class="form-group">
+                                    <label for="due">Due Amount</label>
+                                    <input class="form-control" type="number"  name="due" id="due" placeholder="Due Amount" ng-model="due" style="height:57px;" disabled>
+                                </div>
+                              </div>
+                          </div>
+                    <div class="row">
+                                      <div class="col-lg-12">
+                                        <label for="dued">Due Payment Date(if applicable)</label>
+                                        <input class="form-control" type="date" min="1" name="dued" id="dued" placeholder="Enter Date of Birth" ng-model="dued" style="height:57px;" >
+                                      </div>
+                    </div>
+                    
                           <div class="row">
                               <div class="col-lg-12">
                                   <div class="form-group">

@@ -31,6 +31,7 @@ userAddApp.controller('userAddCtrl', function($scope, $http) {
     $scope.joind = new Date();
     $scope.discp = 0;
     $scope.method = 0;
+    $scope.dued = new Date();
     var emailCheck = 0;
     var phoneCheck = 0;
     var passCheck = 0;
@@ -106,6 +107,8 @@ userAddApp.controller('userAddCtrl', function($scope, $http) {
       if ($scope.discc <= $scope.price) {
         // $scope.discc = $scope.price - (($scope.price * $scope.discp)/100);
         $scope.discp = (($scope.price-$scope.discc)/$scope.price)*100;
+        $scope.apc = $scope.discc;
+        $scope.apcFun();
         $scope.discpError = "";
       }else {
         $scope.discpError = "Please Enter A Valid Discount";
@@ -114,11 +117,17 @@ userAddApp.controller('userAddCtrl', function($scope, $http) {
       }
     }
 
-
+    
     $scope.userAddClick = function() {    
           var check1 = 0;
           var check2 = 0;
           var check3 = 0;
+          var ptv = 0;
+          if($scope.pt == true){
+              ptv = 1;
+          }else{
+              ptv = 0;
+          }    
           if($scope.name == "" || $scope.phone == null || $scope.gender == "" || $scope.email == "" || $scope.dob == "" || $scope.address == "" || $scope.emerNum == null || $scope.emerName == "" || $scope.verificaton == "" || $scope.weight == null || $scope.other == "" || $scope.password == "" || $scope.Cpassword == ""){
              $scope.error = "Please fill all the fields.";
              window.location.href = "#home";
@@ -176,6 +185,9 @@ userAddApp.controller('userAddCtrl', function($scope, $http) {
                 'discp' : $scope.discp,
                 'discc' : $scope.discc,
                 'method' : $scope.method,
+                'pt' : ptv,
+                'apc' : $scope.apc,
+                'dued' : $scope.dued,  
               }
             }
             var request = $http(configure);
@@ -291,6 +303,8 @@ userAddApp.controller('userAddCtrl', function($scope, $http) {
       $scope.exp = dt;
       $scope.price = Number($scope.plans.price);
       $scope.discpFun();
+      $scope.apc = $scope.discc; 
+      $scope.apcFun();    
     }
     $scope.trainerChange = function () {
       var arr = [];
@@ -307,7 +321,15 @@ userAddApp.controller('userAddCtrl', function($scope, $http) {
       $scope.timeList = arr;
       $scope.ftimin = arr[0];
     }
-
+    
+    $scope.apcFun = function(){
+        if($scope.apc > $scope.discc){
+            $scope.apc = $scope.discc;
+            $scope.apcFun();
+        }else{
+            $scope.due = $scope.discc - $scope.apc;
+        }
+    }
 
 });
 
@@ -353,12 +375,11 @@ var userEditApp = angular.module("userEditApp", []);
 userEditApp.controller('userEditCtrl', function($scope, $http) {
   $scope.options = "0";
   $scope.ctcfin = 0;
-  let pid = 0;
-  let change = 1;    
-  let expd = ""
-  let url = window.location.href;
-  let params = (new URL(url)).searchParams;
-  let url_id = params.get('id');
+  var pid = 0;
+  var change = 1;    
+  var expd = ""
+  var url = window.location.href;
+  var url_id = (url.split("?")[1]).split("=")[1];
   $scope.id = Number(url_id);
   $scope.heightList = heightListArr;
 
@@ -394,12 +415,18 @@ userEditApp.controller('userEditCtrl', function($scope, $http) {
     $scope.plans = response.data[0].planC;
     $scope.joind = new Date(response.data[0].joind);
     $scope.discp = Number(response.data[0].discp);
-    $scope.discc = Number(response.data[0].discc);
+    var a = Math.ceil(Number(response.data[0].discc));
+    $scope.discc = a;
     $scope.method = response.data[0].method;
     $scope.exp = new Date(response.data[0].expd);
     expd = response.data[0].expd;
     planCG = response.data[0].planC;
     plansG = response.data[0].plans;
+    if(response.data[0].pt == 1){
+        $scope.pt = true;
+    }else{
+        $scope.pt = false;
+    }  
     pid = plansG;
     trG = response.data[0].trainer;
     // console.log(trG);
@@ -413,31 +440,60 @@ userEditApp.controller('userEditCtrl', function($scope, $http) {
   var phoneCheck = 0;
   var passCheck = 0;
 
-  
+  document.querySelector(".user_upgrade").style.display = "none";
+  document.querySelector(".user_renewal").style.display = "none";
+  document.querySelector(".user_payments").style.display = "none";
   $scope.optionsChange = function(){
-      var edit = document.querySelector(".user_edit");
-      
+      var edit = document.querySelector(".user_edit");      
       if($scope.options == "0"){
           document.querySelector(".user_edit").style.display = "block";
           document.querySelector(".user_upgrade").style.display = "none";
           document.querySelector(".user_renewal").style.display = "none";
           document.location.href = "user_edit.php?id="+$scope.id;
+          document.querySelector(".user_payments").style.display = "none";
       }
       else if($scope.options == "1"){
           document.querySelector(".user_edit").style.display = "none";
           document.querySelector(".user_upgrade").style.display = "block";
           document.querySelector(".user_renewal").style.display = "none";
+          document.querySelector(".user_payments").style.display = "none";
       }
-      else{
+      else if($scope.options == "2"){
           document.querySelector(".user_edit").style.display = "none";
           document.querySelector(".user_upgrade").style.display = "none";
           document.querySelector(".user_renewal").style.display = "block";
           $scope.joind_renew = new Date();
           $scope.pChange_renew();
+          document.querySelector(".user_payments").style.display = "none";
+      }else{
+          document.querySelector(".user_edit").style.display = "none";
+          document.querySelector(".user_upgrade").style.display = "none";
+          document.querySelector(".user_renewal").style.display = "none";
+          document.querySelector(".user_payments").style.display = "block";
+          $scope.viewPays();
       }
   }
 
 //$scope.optionsChange();
+  
+  $scope.viewPays = function(){
+      var config1 = {
+        method : "POST",
+        url : "user_edit_connection.php",
+        data : {
+            "fun" : "getPays",
+            "id" : $scope.id,
+        }
+      }
+      var request1 = $http(config1);
+      request1.then(function mySuccess(response) {
+      console.log(response.data)
+      $scope.userList = response.data;
+      }, function myError(response) {
+        alert("Try again later");
+    });
+  }
+
  
 
   var config1 = {
@@ -496,7 +552,10 @@ userEditApp.controller('userEditCtrl', function($scope, $http) {
 
   $scope.discpFun = function() {
     if ($scope.discp <= 100) {
-      $scope.discc = $scope.price - (($scope.price * $scope.discp)/100);
+      $scope.discc = Math.ceil($scope.price - (($scope.price * $scope.discp)/100));
+      $scope.apc = $scope.discc;
+      $scope.apcFun();
+      $scope.apcFun_up();    
       $scope.discpError = "";
     }else {
       $scope.discpError = "Please Enter A Valid Discount";
@@ -510,6 +569,9 @@ userEditApp.controller('userEditCtrl', function($scope, $http) {
       // $scope.discc = $scope.price - (($scope.price * $scope.discp)/100);
       $scope.discp = (($scope.price-$scope.discc)/$scope.price)*100;
       $scope.discpError = "";
+      $scope.apc = $scope.discc;
+      $scope.apcFun();
+        
     }else {
       $scope.discpError = "Please Enter A Valid Discount";
       $scope.discp = 0;
@@ -521,6 +583,9 @@ userEditApp.controller('userEditCtrl', function($scope, $http) {
    $scope.discpFun_up = function() {
     if ($scope.discp_up <= 100) {
       $scope.discc_up = $scope.ctcfin - (($scope.ctcfin * $scope.discp_up)/100);
+      $scope.apc = $scope.discc;
+      $scope.apcFun();
+      $scope.apcFun_up();    
 //      $scope.discpError = "";
     }else {
 //      $scope.discpError = "Please Enter A Valid Discount";
@@ -533,6 +598,9 @@ userEditApp.controller('userEditCtrl', function($scope, $http) {
     if ($scope.discc_up <= $scope.ctcfin) {
       // $scope.discc = $scope.price - (($scope.price * $scope.discp)/100);
       $scope.discp_up = Number(Number((($scope.ctcfin-$scope.discc_up)/$scope.ctcfin)*100).toFixed(2));
+      $scope.apc = $scope.discc;
+      $scope.apcFun();
+      $scope.apcFun_up();    
 //      $scope.discpError = "";
     }else {
 //      $scope.discpError = "Please Enter A Valid Discount";
@@ -546,6 +614,12 @@ userEditApp.controller('userEditCtrl', function($scope, $http) {
         var check1 = 0;
         var check2 = 0;
         var check3 = 0;
+        var ptv = 0;
+        if($scope.pt == true){
+          ptv = 1;
+        }else{
+          ptv = 0;
+        } 
         if($scope.name == "" || $scope.phone == null || $scope.gender == "" || $scope.email == "" || $scope.dob == "" || $scope.address == "" || $scope.emerNum == null || $scope.emerName == "" || $scope.verificaton == "" || $scope.weight == null || $scope.other == "" || $scope.password == "" || $scope.Cpassword == ""){
            $scope.error = "Please fill all the fields.";
            window.location.href = "#home";
@@ -602,7 +676,8 @@ userEditApp.controller('userEditCtrl', function($scope, $http) {
               'trainer' : $scope.trainer.id,
               'discp' : $scope.discp,
               'discc' : $scope.discc,
-              'method' : $scope.method
+              'method' : $scope.method,
+              'pt' : ptv,    
             }
           }
           var request = $http(configure);
@@ -758,7 +833,7 @@ userEditApp.controller('userEditCtrl', function($scope, $http) {
   
   $scope.ctc = function(){
 //      alert(pid)
-      let curPrice = 0;
+      var curPrice = 0;
       var getPrice_config = {
       method : "POST",
       url : "user_edit_connection.php",
@@ -816,6 +891,7 @@ userEditApp.controller('userEditCtrl', function($scope, $http) {
     }
   }
 
+  $scope.method_up = 0;
   $scope.userUpgradeClick = function(){
       if($scope.ctcfin <=100){
           alert("Please enter valid plan for upgrading.");
@@ -832,18 +908,23 @@ userEditApp.controller('userEditCtrl', function($scope, $http) {
                 "exp" : $scope.exp,
                 "discp": $scope.discp_up,
                 "discc" : $scope.discc_up,
-                "method" : $scope.method_up
+                "method" : $scope.method_up,
+                "apc" : $scope.apc_up,
+                "due" : $scope.due_up,
+                "dued" : $scope.dued
             }
         }
     var request1 = $http(upgrade_config);
     request1.then(function mySuccess(response) {
-      console.log(response)
+      window.location.href = "user.php"
     }, function myError(response) {
       alert("Try again later");
     });
 
       }
   }
+    
+  $scope.dued = new Date((new Date()).getTime()+ 7 * 24 * 60 * 60 * 1000);
   
    $scope.userRenewClick = function(){
       var res = confirm("Are you sure to renew?");
@@ -862,11 +943,15 @@ userEditApp.controller('userEditCtrl', function($scope, $http) {
                 "discp": $scope.discp,
                 "discc" : $scope.discc,
                 "method" : $scope.method,
-                "trainer" : $scope.trainer.id
+                "trainer" : $scope.trainer.id,
+                "apc" : $scope.apc,
+                "due" : $scope.due,
+                "dued" : $scope.dued
             }
            }
          var request1 = $http(config1);
-         request1.then(function mySuccess(response) {     
+         request1.then(function mySuccess(response) {
+            console.log(response.data)
             if(response.data == "success"){
                 alert("Renewed Successfully")
                 window.location.href = "user_edit.php?id=" + $scope.id;
@@ -877,11 +962,29 @@ userEditApp.controller('userEditCtrl', function($scope, $http) {
          }, function myError(response) {
             alert("Try again later");
         });
-          if(chk == 0){
-            alert("Please fill all the details.")
-       }
+//          if(chk == 0){
+//            alert("Please fill all the details.")
+//       }
       }
        
   }
+   
+       $scope.apcFun = function(){
+        if($scope.apc > $scope.discc){
+            $scope.apc = $scope.discc;
+            $scope.apcFun();
+        }else{
+            $scope.due = $scope.discc - $scope.apc;
+        }
+    }
+       
+     $scope.apcFun_up = function(){
+        if($scope.apc_up > $scope.discc_up){
+            $scope.apc_up = $scope.discc_up;
+            $scope.apcFun_up();
+        }else{
+            $scope.due_up = $scope.discc_up - $scope.apc_up;
+        }
+    }   
 
 });

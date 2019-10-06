@@ -1,7 +1,7 @@
 <?php
   error_reporting(0);
   session_start();
-  if($_SESSION['login'] == 0){
+  if($_SESSION['login'] == 0 || !($_SESSION['user_type'] == "user")){
     header("Location:index.php");
   }
 ?>

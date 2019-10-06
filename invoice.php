@@ -22,14 +22,10 @@
             }
         </script>
         <br>
-      <h6>Date - </h6>    
-      <h6>Invoice Number - </h6>    
-      <h1>INVOICE</h1>
-      <div id="company" class="clearfix">
-        
-    <?php 
+            <?php 
             if(isset($_GET['id'])){
-        $the_post_id = $_GET['id'];    
+        $the_post_id = $_GET['id']; 
+        $inv = $_GET['inv'];
     }
         $query = "SELECT * FROM user WHERE id=$the_post_id";
         $select_all_posts = mysqli_query($conn,$query);
@@ -41,14 +37,40 @@
             $address = $row['address'];
             $mail = $row['email'];
             $dob = $row['dob'];
+//            $plans =$row['plans'];
+//            $joind =$row['joind'];
+//            $expd =$row['expd'];
+            $trainer = $row['trainer'];
+//            $user_paid =$row['apc'];
+//            $discc =$row['discc'];
+//            $user_payment_num = $row['method'];
+//            $regd = $row['regd'];
+//            $invoice = $row['invoice'];
+        }
+        
+        $query = "SELECT * FROM payments WHERE invoice=$inv";
+        $select_all_posts = mysqli_query($conn,$query);
+        while($row = mysqli_fetch_assoc($select_all_posts))
+        {
+//            $user_id = $row['id'];
+//            $name = $row['name'];
+//            $phone = $row['phone'];
+//            $address = $row['address'];
+//            $mail = $row['email'];
+//            $dob = $row['dob'];
             $plans =$row['plans'];
             $joind =$row['joind'];
             $expd =$row['expd'];
-            $trainer = $row['trainer'];
-            $user_paid =$row['discc'];
+            $reason = $row['reason'];
+            $user_paid =$row['apc'];
+            $discc =$row['discc'];
             $user_payment_num = $row['method'];
+            $regd = $row['regd'];
+//            $invoice = $row['invoice'];
         }
-          
+        
+        
+        $due = $discc - $user_paid;  
         $query = "SELECT * FROM employee WHERE id=$trainer";
         $get_trainer = mysqli_query($conn,$query);
         while($row = mysqli_fetch_assoc($get_trainer))
@@ -84,12 +106,35 @@
         $user_total =$user_plan_fees;  
         $user_plan_fees = $user_plan_fees - ((($user_cgst+$user_sgst)/100)*$user_plan_fees); 
         $joind = strtotime($joind); 
-        $expd = strtotime($expd)  
+        $expd = strtotime($expd);
+        
+        session_start();
+        $clientRep = $_SESSION['userid'];
+        $queryy = "SELECT * FROM employee WHERE id=$clientRep";
+        $select_all_posts = mysqli_query($conn,$queryy);
+        while($row = mysqli_fetch_assoc($select_all_posts))
+        {
+            $crep_name =$row['name'];
+        }
+        
+        if($reason == "due"){
+            $user_cgst ="-";
+            $user_sgst ="-";
+            $user_total = $user_paid;
+        }
         ?>
+      <h6>Date - <?php echo $regd;?></h6>    
+      <h6>Invoice Number - <?php echo $_GET['inv'];?> </h6>    
+      <h1>INVOICE</h1>
+      <div id="company" class="clearfix">
+        
+
         <div style="font-size: 1.2em;">Leon Maestro De Fitness</div>
         <div style="padding-top:10px;font-size: 1em;">No 36, 1st Floor<br />Arogyapa Layout</div>
         <div style="padding-top:10px;font-size: 1em;">1234567891 </div>
-        <div style="padding-top:10px;font-size: 1em;">Client Representative -<?php echo $trainer_name; ?></div>
+        <div style="padding-top:10px;font-size: 1em;">Trainer -<?php echo $trainer_name; ?></div>
+        <div style="padding-top:10px;font-size: 1em;">Client Representative
+            -<?php echo $crep_name; ?></div>
         <div style="padding-top:10px;font-size: 1em;"><a href="mailto:company@example.com">company@example.com</a></div>
       </div>
       <div id="project" style="font-size: 0.2em;">
@@ -117,20 +162,35 @@
         <thead>
           <tr>
             <th class="desc">Plan Type</th>
-            <th class="desc">Plan Name</th>  
+            <th class="desc">Plan Name</th>
+            
+            <?php
+              if($reason != "due"){
+              ?>  
             <th>Plan Fees</th>
             <th>Environmental Fees</th>
+            <?php }else{?>
+            <th></th>
+            <th></th>
+              <?php }?>
             <th>SGST</th>
             <th>CGST</th>
-            <th>TOTAL</th>
+            <th class="total">TOTAL</th>
           </tr>
         </thead>
         <tbody>
           <tr>
             <td class="service"><?php echo $planC;?></td>
-              <td class="service"><?php echo $plans;?></td>
+              <td class="service"><?php echo $plans;?></td>        
+              <?php
+              if($reason != "due"){
+              ?>  
             <td class="desc"><center><?php echo $user_plan_fees;?></center></td>
               <td class="unit"><center><?php echo $user_env_fees;?></center></td>
+              <?php }else{?>
+            <td></td>
+            <td></td>
+              <?php }?>  
               <td class="qty"><center><?php echo $user_cgst; ?></center></td>
               <td class="total"><center><?php echo $user_sgst; ?></center></td>
               <td class="total"><center><?php echo $user_total; ?></center></td>
@@ -141,7 +201,7 @@
           </tr>
           <tr>
             <td colspan="6">DUE AMOUNT</td>
-            <td class="total"><center><?php echo $user_due;?></center></td>
+            <td class="total"><center><?php echo $due;?></center></td>
           </tr>
           <tr>
             <td colspan="6" class="grand total">PAYMENT MODE</td>
@@ -156,10 +216,10 @@
         <div class="notice"  style=" padding-top:9px;">3. We have no refund policy</div>
         <div class="notice"  style=" padding-top:9px;">4. Mangement reserves the right to admission.</div>
         <div class="notice" style=" padding-top:9px;">5. No disputes or argument will be entertained without showing a valid recipt.</div>
-        <div class="notice" style=" padding-top:9px;">6. Cheque dishoner charges will be applicable incase of a bounce cheque.</div>
+        <div class="notice" style=" padding-top:9px;">6. Cheque dishonour charges will be applicable incase of a bounce cheque.</div>
         <div class="notice" style=" padding-top:9px;">7. Payment done for product service can not be adjusted against another product package/service</div>
         <div class="notice" style=" padding-top:9px;">8. The membership is Non transferable to any other individual/agent/instituion</div>
-        <div class="notice" style=" padding-top:9px;">9. In case of cheques, please iisue cheques favouring Leon Maestro De Fitness</div>
+        <div class="notice" style=" padding-top:9px;">9. In case of cheques, please issue cheques favouring Leon Maestro De Fitness</div>
       </div>
         <br>
 <!--        <button onClick="window.print()" class="">Download</button>-->

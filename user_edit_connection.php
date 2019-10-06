@@ -38,6 +38,7 @@ function getClient($conn,$request)
         $obj->discp = $row['discp'];
         $obj->discc = $row['discc'];
         $obj->method = $row['method'];
+        $obj->pt = $row['pt'];   
         $arr[$count] = $obj;
         $count = $count + 1;
       }
@@ -76,9 +77,10 @@ function editUser($conn,$request)
   $discc = $request->discc;
   $discp = $request->discp;
   $method = $request->method;
+  $pt = $request->pt;
   $sql = "UPDATE user SET name='$name',phone='$phone',email='$email',gender='$gender',address='$address',dob='$dob',emerNum='$emerNum',emerName='$emerName',
   country = '$nationality',verification='$verification',password='$password',blood='$blood',height=$height,weight=$weight,others='$other',planC=$planC,
-  plans=$plans,joind='$joind',expd='$expd',trainer=$trainer, discc=$discc, discp=$discp, method=$method WHERE id=$id";
+  plans=$plans,joind='$joind',expd='$expd',trainer=$trainer, discc=$discc, discp=$discp, method=$method, pt=$pt WHERE id=$id";
   $result = $conn->query($sql);
   echo mysqli_error($conn);
   $sql = "UPDATE login SET password='$password' WHERE id=$id";
@@ -97,6 +99,10 @@ function delClient($conn,$request)
   $sql = "DELETE FROM user WHERE id=$id";
   $result = $conn->query($sql);
   $sql = "DELETE FROM login WHERE id=$id";
+  $result = $conn->query($sql);
+  $sql = "DELETE FROM pt WHERE userid=$id";
+  $result = $conn->query($sql);
+  $sql = "DELETE FROM payments WHERE userid=$id";
   $result = $conn->query($sql);
   exit();
 }
@@ -160,15 +166,31 @@ function upgradePlan($conn,$request){
     $discp = $request->discp;
     $discc = $request->discc;
     $method = $request->method;
-    $trainer = $request->trainer;
-    $sql = "UPDATE user SET planC=$planC,plans=$plans,joind='$joind',expd='$exp',discp=$discp,discc=$discc,method=$method,trainer='$trainer' WHERE id=$id";
-    $date = date('d-m-Y');
-    $month = date('m');
-    $year = date('Y');
+    $apc = $request->apc;
+    $due = $request->due;
+    $dued = $request->dued; 
+    $regd = date("d-m-Y");
+    $sql = "SELECT * FROM invoice_num";
     $result = $conn->query($sql);
-    $sql = "INSERT INTO payments (reason,userid,date,month,year) VALUES ('upgrade',$id,'$date',$month,$year)";
+        if ($result->num_rows > 0) {    
+            while($row = $result->fetch_assoc()) {
+                $invoice = $row['number'];  
+            }
+        }
+    $invoice += 1;
+    $sql = "UPDATE invoice_num SET number=$invoice";
     $result = $conn->query($sql);
-    echo $date;
+    $sql = "UPDATE user SET planC=$planC,plans=$plans,joind='$joind',expd='$exp',discp=$discp,discc=$discc,method=$method,apc=$apc,invoice=$invoice WHERE id=$id";
+    $result = $conn->query($sql);
+    if($due>0){
+      $dued = date('Y-m-d',strtotime($dued));
+      $sql = "INSERT INTO due (user_id,due_amt,date) VALUES ($id,$due,'$dued')";
+      $result = $conn->query($sql);
+    }
+    $result = $conn->query($sql);
+    $sql = "INSERT INTO payments (userid,planC,plans,joind,expd,discp,discc,method,regd,invoice,apc,reason) VALUES ($id,$planC,$plans,'$joind','$exp',$discp,$discc,$method,'$regd',$invoice,$apc,'upgrade')";
+    $result = $conn->query($sql);
+    echo "success";
 }
 
 
@@ -182,15 +204,91 @@ function renewPlan($conn,$request){
     $discc = $request->discc;
     $method = $request->method;
     $trainer = $request->trainer;
-    $sql = "UPDATE user SET planC=$planC,plans=$plans,joind='$joind',expd='$exp',discp=$discp,discc=$discc,method=$method,trainer=$trainer WHERE id=$id";
-    $date = date('d-m-Y');
-    $month = date('m');
-    $year = date('Y');
+    $apc = $request->apc;
+    $due = $request->due;
+    $dued = $request->dued;
+    $regd = date("d-m-Y");
+    $sql = "SELECT * FROM invoice_num";
     $result = $conn->query($sql);
-    $sql = "INSERT INTO payments (reason,userid,date,month,year) VALUES ('renewal',$id,'$date',$month,$year)";
+    if ($result->num_rows > 0) {    
+      while($row = $result->fetch_assoc()) {
+            $invoice = $row['number'];  
+      }
+    }
+    $invoice += 1;
+    $sql = "UPDATE invoice_num SET number=$invoice";
+    $result = $conn->query($sql);   
+    $sql = "UPDATE user SET planC=$planC,plans=$plans,joind='$joind',expd='$exp',discp=$discp,discc=$discc,method=$method,trainer=$trainer,regd='$regd',invoice=$invoice,apc=$apc WHERE id=$id";
+    $result = $conn->query($sql);
+    if($due>0){
+      $dued = date('Y-m-d',strtotime($dued));
+      $sql = "INSERT INTO due (user_id,due_amt,date) VALUES ($id,$due,'$dued')";
+      $result = $conn->query($sql);
+    }
+    
+    
+    
+    $result = $conn->query($sql);
+    $sql = "INSERT INTO payments (userid,planC,plans,joind,expd,discp,discc,method,regd,invoice,apc,reason) VALUES ($id,$planC,$plans,'$joind','$exp',$discp,$discc,$method,'$regd',$invoice,$apc,'renew')";
     $result = $conn->query($sql);
     echo "success";
 }
+
+
+function getPays($conn,$request){
+    $id = $request->id;
+    $sql = "SELECT * FROM payments WHERE userid=$id ORDER BY id DESC";
+    $result = $conn->query($sql);
+    if ($result->num_rows > 0) {
+        $arr = [];
+        $count = 0;
+        while($row = $result->fetch_assoc()) {
+            $obj = new stdClass();
+            $obj->invoice = $row['invoice'];
+            $obj->id = $row['userid'];
+            $obj->reason = $row['reason'];
+            $obj->apc= $row['apc'];
+            $exp = $row['expired'];
+            if($row['reason'] == "due"){
+                $obj->status = "-";
+            }else{
+                if($exp == 0){
+                    $obj->status = "Active";    
+                }else{
+                    $obj->status = "Expired";    
+                }
+            }
+            $planC = $row['planC'];
+            $sql1 = "SELECT category FROM plan_category where id=$planC";
+            $result1 = $conn->query($sql1);
+            if ($result1->num_rows > 0) {
+                while($row1 = $result1->fetch_assoc()) {
+                    $obj->planC = $row1['category'];
+                }
+            }else {
+                $obj->planC = "Not available";
+            }
+            $plans = $row['plans'];
+            $sql1 = "SELECT name FROM plan where id=$plans";
+            $result1 = $conn->query($sql1);
+            if ($result1->num_rows > 0) {
+                while($row1 = $result1->fetch_assoc()) {
+                    $obj->plans = $row1['name'];
+                }
+            }else {
+                $obj->planC = "Not available";
+            }
+            $arr[$count] = $obj;
+            $count = $count + 1;
+        }
+        echo json_encode($arr);
+        exit();
+  }
+  echo mysqli_error($conn);
+  exit();
+}
+
+
 
 $post = file_get_contents('php://input');
 $request = json_decode($post);
@@ -212,6 +310,8 @@ elseif ($fun == "phoneCheck") {
   upgradePlan($conn,$request);  
 }else if($fun == "renewPlan"){
   renewPlan($conn,$request);  
+}else if($fun == "getPays"){
+  getPays($conn,$request);  
 }
 
 

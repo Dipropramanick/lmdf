@@ -1,7 +1,7 @@
 <?php
   error_reporting(0);
   session_start();
-  if($_SESSION['login'] == 0){
+  if($_SESSION['login'] == 0 || ($_SESSION['user_type'] != "admin" && $_SESSION['user_type'] != "trainer")){
     header("Location:index.php");
   }
 ?>
@@ -76,6 +76,8 @@
     if($status == 0){
         $sess_count += 1;
     }
+    session_start();
+    $_SESSION["sess_num"] = $sess_count;
 
  ?>
 <!-- page details -->
@@ -129,8 +131,12 @@
                 data: id.toString(),
                 dataType: "text",
                 success: function(result){  
-                   document.querySelector(".startBtn").style.display = "none";
-                   document.querySelector(".endBtn").style.display = "block"; 
+                   if(result == "no"){
+                       alert("Personal Trainee Feedback Not Given");
+                   }else{
+                       document.querySelector(".startBtn").style.display = "none";
+                       document.querySelector(".endBtn").style.display = "block"; 
+                   }
                 },
                 error: function(result){
                     alert("failed")

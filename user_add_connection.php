@@ -21,7 +21,7 @@ function getId($conn)
       }
       echo $res;
   }else{
-    echo "4999";
+    echo "1999";
   }
   echo mysqli_error($conn);
   exit();
@@ -91,12 +91,51 @@ function addUser($conn,$request)
   $discc = $request->discc;
   $discp = $request->discp;
   $method = $request->method;
-  $sql = "INSERT INTO user (id,name,phone,email,gender,address,dob,emerNum,emerName,country,verification,password,blood,height,weight,others,planC,plans,joind,expd,trainer, discc, discp, method)
+  $pt = $request->pt; 
+  $apc = $request->apc;
+  $dued = $request->dued;
+  $due = $discc - $apc;    
+  $regd = date('d-m-Y'); 
+  $sql = "SELECT * FROM invoice_num";
+  $result = $conn->query($sql);
+  if ($result->num_rows > 0) {    
+      while($row = $result->fetch_assoc()) {
+            $invoice = $row['number'];  
+      }
+  }
+  $invoice += 1;     
+  $sql = "INSERT INTO user (id,name,phone,email,gender,address,dob,emerNum,emerName,country,verification,password,blood,height,weight,others,planC,plans,joind,expd,trainer, discc, discp, method,regd,pic,pt,invoice,apc)
   VALUES ($id,'$name','$phone','$email','$gender','$address','$dob','$emerNum','$emerName','$nationality','$verification','$password','$blood','$height','$weight','$other',$planC,$plans,'$joind','$expd'
-  ,$trainer, $discc, $discp, $method)";
+  ,$trainer, $discc, $discp, $method,'$regd','prof.jpg',$pt,$invoice,$apc)";
   $result = $conn->query($sql);
   $sql = "INSERT INTO login (id,password,type) VALUES ($id,'$password','user')";
   $result = $conn->query($sql);
+  $sql = "UPDATE invoice_num SET number=$invoice";
+  $result = $conn->query($sql);   
+  if($due>0){
+      $dued = date('Y-m-d',strtotime($dued));
+      $sql = "INSERT INTO due (user_id,due_amt,date) VALUES ($id,$due,'$dued')";
+      $result = $conn->query($sql);
+  }
+    
+  $sql = "INSERT INTO payments (userid,planC,plans,joind,expd, discc, discp, method,regd,invoice,apc,reason)
+  VALUES ($id,$planC,$plans,'$joind','$expd', $discc, $discp, $method,'$regd',$invoice,$apc,'fresher')";
+  $result = $conn->query($sql);
+
+    
+
+  $msg2 = "Hi $name, Thank you for joining the LMF family. Your user id is $id. Please visit https://lmdffinal.000webhostapp.com/ to access your LMF Account.";         
+  $msg2 = urlencode($msg2);
+  $link2 = "https://alerts.solutionsinfini.com/api/v4/?api_key=A396749973d759c784a0c167eeb5ca2e8&method=sms&message=$msg2&to=91$phone&sender=LEONMA";
+  $ran2 = file_get_contents($link2);    
+    
+    
+  $msg = "Thank You for your payment. Your payment of Rs.$apc is done successfully towards Leon Maestro De Fitness Contact: 9886781967";
+  $msg = urlencode($msg);
+  $link = "https://alerts.solutionsinfini.com/api/v4/?api_key=A396749973d759c784a0c167eeb5ca2e8&method=sms&message=$msg&to=91$phone&sender=LEONMA";
+  $ran = file_get_contents($link);
+      
+  
   exit();
 }
 
@@ -156,7 +195,7 @@ function getPlans($conn,$request)
 
 function getTrainer($conn,$request)
 {
-  $sql = "SELECT * FROM employee WHERE type='trainer'";
+  $sql = "SELECT * FROM employee WHERE type='trainer' or type='admin'";
   $result = $conn->query($sql);
   if ($result->num_rows > 0) {
       $arr = [];

@@ -1,7 +1,7 @@
 <?php
   error_reporting(0);
   session_start();
-  if($_SESSION['login'] == 0 || !($_SESSION['user_type'] == "admin") ){
+  if($_SESSION['login'] == 0  || $_SESSION['user_type'] != "admin"){
     header("Location:index.php");
   }
 ?>
@@ -35,9 +35,10 @@
     <!-- /Fonts -->
    <link href="//fonts.googleapis.com/css?family=Oswald:200,300,400,500,600,700" rel="stylesheet">
    <link href="//fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i,800,800i" rel="stylesheet">
+
     <!-- //Fonts -->
     <script type="text/javascript" src="js/angular.js"></script>
-    <script type="text/javascript" src="js/employee.js"></script>
+    <script type="text/javascript" src="js/user.js"></script>
     <style>
       #customers {
         font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
@@ -81,48 +82,62 @@
 		<li class="breadcrumb-item">
 			<a href="index.php">Home</a>
 		</li>
-		<li class="breadcrumb-item active" aria-current="page">Employees</li>
+		<li class="breadcrumb-item active" aria-current="page">Feedback</li>
 	</ol>
 </div>
 <!-- //page details -->
 <!-- //banner-botttom -->
-    <section class="content-info py-5" ng-app="employeeApp" ng-controller="employeeCtrl">
-      <div class="container">
-        <div class="contact-w3pvt-form mt-5">
-            <form class="w3layouts-contact-fm" method="post">
-                <div class="row">
-                    <div class="col-lg-12">
-                        <div class="form-group search">
-                            <label for="userid">Search Employee</label>
-                            <!-- <span class="fa fa-search"></span> -->
-                            <input class="form-control" type="text"  name="Name" id="userid" placeholder="Enter UserId/Name/Mobile/Type" ng-model="empSearch">
+    <section class="content-info py-5">
+    <h1 align="center">Feedback About You.</h1><br>
+
+    
+        <?php
+            include "db.php";
+            session_start();
+            $id = $_SESSION['userid'];
+            $sql = "SELECT * FROM pt WHERE trainerid=$id ORDER BY trainerid, rating DESC";
+            $result = $conn->query($sql);
+            $avg_rating = 0;
+            $count = 0;
+            if ($result->num_rows > 0) {
+                while($row = $result->fetch_assoc()) {
+                    $avg_rating += $row['rating'];
+                    $count += 1;
+                }
+                $avg_rating = round($avg_rating/$count,1);
+                echo "<h2 align='center'>Average Rating : $avg_rating <h2>";
+            }
+            $sql = "SELECT * FROM pt ORDER BY trainerid,rating DESC";
+            $result = $conn->query($sql);
+            if ($result->num_rows > 0) {
+                while($row = $result->fetch_assoc()) {?>
+                <div class="container">
+                    <div class="row">
+                        <div class="col-lg-12 jumbotron"> 
+                            <h2>Ratings: <?php echo $row['rating'];?></h2>
+                            <br>
+                            <h3>Trainer: 
+                            <?php
+                                $tid = $row['trainerid'];
+                                $sql1 = "SELECT name FROM employee WHERE id=$tid";
+                                $result1 = $conn->query($sql1);                                                   if ($result1->num_rows > 0) {
+                                    while($row1 = $result1->fetch_assoc()) {   
+                                        $name = $row1['name'];
+                                    }
+                                }  
+                            echo $name;?></h3>
+                            <br>
+                            <h3>Feedback: <?php echo $row['fb_text'];?></h3>
                         </div>
                     </div>
                 </div>
-
-            </form>
-        </div>
-      </div>
-      <div style="height:500px;overflow-y:scroll;">
-        <table id="customers">
-          <tr >
-            <th>ID</th>
-            <th>Name</th>
-            <th>Mobile</th>
-            <th>Type</th>
-          </tr>
-
-          <tr ng-repeat="emp in empList | filter:empSearch" style="cursor:pointer;" ng-click="empClick(emp)">
-            <td >{{emp.id}}</td>
-            <td>{{emp.name}}</td>
-            <td>{{emp.phone}}</td>
-            <td>{{emp.type}}</td>
-          </tr>
-</table>
-</div>
-    <div class="container">
-      <a href="employee_add.php" class="btn btn-danger btn-block"><span class="fa fa-plus"></span> Add New Employee</a>&nbsp;
-    </div>
+            <?php
+                }
+            }else{
+        ?>
+        <h3 align="center">No Feedbacks Given</h3>
+        <?php }?>
+    
     </section>
     <!-- //banner-botttom -->
 

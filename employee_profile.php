@@ -1,7 +1,7 @@
 <?php
   error_reporting(0);
   session_start();
-  if($_SESSION['login'] == 0){
+  if($_SESSION['login'] == 0 || !($_SESSION['user_type'] == "admin")){
     header("Location:index.php");
   }
 ?>
@@ -84,7 +84,10 @@
                                 echo "<script>alert('ONOP');</script>";                                                             
                                 echo "<script>window.location.href='employee_profile.php?id=$id'</script>";
                             }else{
-                                $profileImageName = $_FILES['image']['name'];
+                                $pname = $_FILES['image']['name'];                                
+                                $profileImageName = (string)$id;
+                                $format = explode(".",$pname)[1];
+                                $profileImageName = $profileImageName .".".$format;
                                 $target = 'profile_images/'.$profileImageName;
                                 move_uploaded_file($_FILES['image']['tmp_name'],$target);
                                 $sql = "UPDATE employee SET pic='$profileImageName' WHERE id=$id";
@@ -97,7 +100,7 @@
                  <form method="post" action="" enctype="multipart/form-data"> 
                      <img src="images/prof.jpg" alt="Try later" style="margin:auto;min-height:200px; min-width:200px;height:200px; width:200px;border-radius:50%;" id="img_view" onclick="triggerClick()"><br><br>
                      <input type="file" name="image" onchange="displayImage(this)" id="image" style="display:none;" />  
-                     <input type="submit" name="insert" id="insert" value="Insert" class="btn btn-info btn-block" />  
+                     <input type="submit" name="insert" id="insert" value="Upload" class="btn btn-info btn-block" />  
                 </form>    
             </div>
         </div>
