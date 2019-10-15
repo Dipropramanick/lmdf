@@ -188,7 +188,10 @@ function upgradePlan($conn,$request){
       $result = $conn->query($sql);
     }
     $result = $conn->query($sql);
-    $sql = "INSERT INTO payments (userid,planC,plans,joind,expd,discp,discc,method,regd,invoice,apc,reason) VALUES ($id,$planC,$plans,'$joind','$exp',$discp,$discc,$method,'$regd',$invoice,$apc,'upgrade')";
+    
+    session_start();
+    $crep = $_SESSION['userid']; 
+    $sql = "INSERT INTO payments (userid,planC,plans,joind,expd,discp,discc,method,regd,invoice,apc,reason,crep) VALUES ($id,$planC,$plans,'$joind','$exp',$discp,$discc,$method,'$regd',$invoice,$apc,'upgrade',$crep)";
     $result = $conn->query($sql);
     echo "success";
 }
@@ -226,10 +229,10 @@ function renewPlan($conn,$request){
       $result = $conn->query($sql);
     }
     
-    
-    
+    session_start();
+    $crep = $_SESSION['userid']; 
     $result = $conn->query($sql);
-    $sql = "INSERT INTO payments (userid,planC,plans,joind,expd,discp,discc,method,regd,invoice,apc,reason) VALUES ($id,$planC,$plans,'$joind','$exp',$discp,$discc,$method,'$regd',$invoice,$apc,'renew')";
+    $sql = "INSERT INTO payments (userid,planC,plans,joind,expd,discp,discc,method,regd,invoice,apc,reason,crep) VALUES ($id,$planC,$plans,'$joind','$exp',$discp,$discc,$method,'$regd',$invoice,$apc,'renew',$crep)";
     $result = $conn->query($sql);
     echo "success";
 }

@@ -9,7 +9,6 @@
 //   echo("Connection failed: " . $conn->connect_error);
 // }
 include 'db.php';
-
 function getId($conn)
 {
   $sql = "SELECT id FROM user";
@@ -117,9 +116,11 @@ function addUser($conn,$request)
       $sql = "INSERT INTO due (user_id,due_amt,date) VALUES ($id,$due,'$dued')";
       $result = $conn->query($sql);
   }
-    
-  $sql = "INSERT INTO payments (userid,planC,plans,joind,expd, discc, discp, method,regd,invoice,apc,reason)
-  VALUES ($id,$planC,$plans,'$joind','$expd', $discc, $discp, $method,'$regd',$invoice,$apc,'fresher')";
+  
+  session_start();
+  $crep = $_SESSION['userid'];    
+  $sql = "INSERT INTO payments (userid,planC,plans,joind,expd, discc, discp, method,regd,invoice,apc,reason,crep)
+  VALUES ($id,$planC,$plans,'$joind','$expd', $discc, $discp, $method,'$regd',$invoice,$apc,'fresher',$crep)";
   $result = $conn->query($sql);
 
     

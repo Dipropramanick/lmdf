@@ -1,7 +1,7 @@
 <?php
   error_reporting(0);
   session_start();
-  if($_SESSION['login'] == 0 || !($_SESSION['user_type'] == "admin" || $_SESSION['user_type'] == "sales")){
+  if($_SESSION['login'] == 0 || $_SESSION['user_type'] == "trainer" || $_SESSION['user_type'] == "admin"){
     header("Location:index.php");
   }
 ?>
@@ -38,7 +38,7 @@
 
     <!-- //Fonts -->
     <script type="text/javascript" src="js/angular.js"></script>
-    <script type="text/javascript" src="js/due.js"></script>
+    <script type="text/javascript" src="js/abtTrainer.js"></script>
     <style>
       #customers {
         font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
@@ -82,50 +82,35 @@
 		<li class="breadcrumb-item">
 			<a href="index.php">Home</a>
 		</li>
-		<li class="breadcrumb-item active" aria-current="page">Due Payments</li>
+		<li class="breadcrumb-item active" aria-current="page">Payments</li>
 	</ol>
 </div>
 <!-- //page details -->
 <!-- //banner-botttom -->
-    <?php 
-        include "db.php";
-        $id = $_GET['id'];
-        $sql = "SELECT * FROM due WHERE user_id=$id";
-        $result = $conn->query($sql);
-        if ($result->num_rows > 0) {
-            while($row = $result->fetch_assoc()) {
-                $due_amt = $row['due_amt'];
-            }
-        }
-        
-    ?>
-    <section class="content-info py-5" ng-app="duePayApp" ng-controller="duePayCtrl">
-      <div class="container">
-          <h1 align="center">Due Payment</h1>
-          <br><br>
-          <h3>USER ID : <?php echo $id;?></h3><br>
-          <h3>DUE AMOUNT : <?php echo $due_amt;?></h3>
-          <br>
-        <div class="row">
-              <div class="col-lg-12">
-                  <div class="form-group">
-                      <h3>Payment: </h3><br>
-                      <label for="no">
-                      <input type="radio" id="no" name="sch" ng-model="method" value="0" style="height:20px;">Cash</label>&nbsp;&nbsp;&nbsp;&nbsp;
-                      <label for="one">
-                      <input type="radio" id="one" name="sch" ng-model="method" value="1" style="height:20px;">Credit/Debit Card</label>&nbsp;&nbsp;&nbsp;&nbsp;
-                      <label for="two">
-                      <input type="radio" id="two" name="sch" ng-model="method" value="2" style="height:20px;">Cheque/UPI/Other</label>&nbsp;&nbsp;&nbsp;&nbsp;
-                    </div>
-              </div>
-       </div> 
-       <div class="row">
-            <div class="col-lg-12">
-                <button class="btn btn-lg btn-block btn-danger" ng-click="duePayClick()">Pay Amount</button>
-            </div>   
-       </div>      
-      </div>  
-    </section>
+    <section class="content-info py-5" ng-app="userPayApp" ng-controller="userPayCtrl">
+
+    <div style="height:500px;overflow-y:scroll;" class="user_payments">
+        <table id="customers">
+          <tr >
+            <th>Payment Reason</th>
+            <th>Plan Category</th>
+            <th>Plan Term</th>
+            <th>Amount Paid</th>
+            <th>Status</th>
+            <th>Invoice</th>
+          </tr>
+
+          <tr ng-repeat="usr in userList" style="cursor:pointer;">
+            <td>{{usr.reason}}</td>
+            <td>{{usr.planC}}</td>
+            <td>{{usr.plans}}</td>
+            <td>{{usr.apc}}</td>
+            <td>{{usr.status}}</td>
+            <td><a href="invoice.php?inv={{usr.invoice}}&id={{usr.id}}">Invoice</a></td>
+          </tr>
+      </table>
+     </div>
+</section>
     <!-- //banner-botttom -->
 
 <!-- footer -->

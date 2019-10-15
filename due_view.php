@@ -1,7 +1,7 @@
 <?php
   error_reporting(0);
   session_start();
-  if($_SESSION['login'] == 0 || !($_SESSION['user_type'] == "admin")){
+  if($_SESSION['login'] == 0 || !($_SESSION['user_type'] == "admin" || $_SESSION['user_type'] == "sales") ){
     header("Location:index.php");
   }
 ?>
@@ -94,7 +94,7 @@
                 <div class="row">
                     <div class="col-lg-12">
                         <div class="form-group search">
-                            <label for="userid">Search Employee</label>
+                            <label for="userid">Search Dues</label>
                             <!-- <span class="fa fa-search"></span> -->
                             <input class="form-control" type="text"  name="Name" id="userid" placeholder="Enter UserId/Name/Mobile/Train" ng-model="usrSearch">
                         </div>

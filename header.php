@@ -54,7 +54,7 @@
 						<ul class="menu">
               <!-- ============================= ADMIN NAVBAR ====================================== -->
               <?php if(isset($_SESSION['login']) && $_SESSION['user_type'] == "admin"){?>
-                <li class="mr-lg-3 mr-2"><a >Welcome, <?php session_start(); echo $_SESSION['username']; ?></a></li>
+                <li class="mr-lg-3 mr-2"><a href="dashboard.php">Welcome, <?php session_start(); echo $_SESSION['username']; ?></a></li>
                 <li class="mr-lg-3 mr-2 p-0">
   							<label for="drop-2" class="toggle">Employees <span class="fa fa-angle-down" aria-hidden="true"></span> </label>
   							<a href="#">Employees <span class="fa fa-angle-down" aria-hidden="true"></span></a>
@@ -101,7 +101,7 @@
 
               <!-- ============================= SALES NAVBAR ====================================== -->
               <?php }else if(isset($_SESSION['login']) && $_SESSION['user_type'] == "sales"){?>
-              <li class="mr-lg-3 mr-2"><a >Welcome, <?php session_start(); echo $_SESSION['username']; ?></a></li>
+             <li class="mr-lg-3 mr-2"><a href="dashboard.php">Welcome, <?php session_start(); echo $_SESSION['username']; ?></a></li>
 							<li class="mr-lg-3 mr-2"><a href="user_add.php">Add Client</a></li>
               <li class="mr-lg-3 mr-2"><a href="user.php">Edit/Delete Client</a></li>
               <li class="mr-lg-3 mr-2"><a href="attendance.php">Attendance</a></li>
@@ -120,7 +120,7 @@
 
               <!-- ============================= TRAINER NAVBAR ====================================== -->
             <?php }else if(isset($_SESSION['login']) && $_SESSION['user_type'] == "trainer"){?>
-              <li class="mr-lg-3 mr-2"><a >Welcome, <?php session_start(); echo $_SESSION['username']; ?></a></li>
+              <li class="mr-lg-3 mr-2"><a href="dashboard.php">Welcome, <?php session_start(); echo $_SESSION['username']; ?></a></li>
               <li class="mr-lg-3 mr-2"><a href="about_client.php">My Clients</a></li>
               <li class="mr-lg-3 mr-2"><a href="attendance.php">Attendance</a></li>
               <li class="mr-lg-3 mr-2"><a href="dashboard.php">Dashboard</a></li>
@@ -136,7 +136,7 @@
   							</li>
               <!-- ============================= //TRAINER NAVBAR ====================================== -->
             <?php }else if(isset($_SESSION['login']) && $_SESSION['user_type'] == "user"){?>
-              <li class="mr-lg-3 mr-2"><a >Welcome, <?php session_start(); echo $_SESSION['username']; ?></a></li>
+             <li class="mr-lg-3 mr-2"><a href="dashboard.php">Welcome, <?php session_start(); echo $_SESSION['username']; ?></a></li>
               <li class="mr-lg-3 mr-2"><a href="about_trainer.php">My Trainer</a></li>
               <li class="mr-lg-3 mr-2"><a href="attendance.php">Attendance</a></li>
               <li class="mr-lg-3 mr-2 p-0">

@@ -70,8 +70,10 @@ function payDue($conn,$request){
     $invoice += 1;
     $sql = "UPDATE invoice_num SET number=$invoice";
     $result = $conn->query($sql);
-    $sql = "INSERT INTO payments (userid,planC,plans,joind,expd,discp,discc,method,regd,invoice,apc,reason
-) VALUES ($id,$planC,$plans,'$joind','$expd',$discp,$discc,$method,'$regd',$invoice,$apc,'due')";
+    session_start();
+    $crep = $_SESSION['userid']; 
+    $sql = "INSERT INTO payments (userid,planC,plans,joind,expd,discp,discc,method,regd,invoice,apc,reason,crep
+) VALUES ($id,$planC,$plans,'$joind','$expd',$discp,$discc,$method,'$regd',$invoice,$apc,'due',$crep)";
     $result = $conn->query($sql);
     echo mysqli_error($conn);
     $sql = "DELETE FROM due WHERE user_id=$id";

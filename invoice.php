@@ -37,27 +37,14 @@
             $address = $row['address'];
             $mail = $row['email'];
             $dob = $row['dob'];
-//            $plans =$row['plans'];
-//            $joind =$row['joind'];
-//            $expd =$row['expd'];
             $trainer = $row['trainer'];
-//            $user_paid =$row['apc'];
-//            $discc =$row['discc'];
-//            $user_payment_num = $row['method'];
-//            $regd = $row['regd'];
-//            $invoice = $row['invoice'];
         }
         
         $query = "SELECT * FROM payments WHERE invoice=$inv";
         $select_all_posts = mysqli_query($conn,$query);
         while($row = mysqli_fetch_assoc($select_all_posts))
         {
-//            $user_id = $row['id'];
-//            $name = $row['name'];
-//            $phone = $row['phone'];
-//            $address = $row['address'];
-//            $mail = $row['email'];
-//            $dob = $row['dob'];
+
             $plans =$row['plans'];
             $joind =$row['joind'];
             $expd =$row['expd'];
@@ -66,7 +53,7 @@
             $discc =$row['discc'];
             $user_payment_num = $row['method'];
             $regd = $row['regd'];
-//            $invoice = $row['invoice'];
+            $clientRep = $row['crep'];
         }
         
         
@@ -109,7 +96,6 @@
         $expd = strtotime($expd);
         
         session_start();
-        $clientRep = $_SESSION['userid'];
         $queryy = "SELECT * FROM employee WHERE id=$clientRep";
         $select_all_posts = mysqli_query($conn,$queryy);
         while($row = mysqli_fetch_assoc($select_all_posts))

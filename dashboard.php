@@ -144,7 +144,11 @@
           <div class="col-lg-6">
             <a href="user.php" class="btn btn-danger" style="width:100%;padding:100px;"><span class="fa fa-edit"></span> Edit / <span class="fa fa-trash"></span> Delete Client</a>&nbsp;
           </div>
+            <div class="col-lg-6">
+            <a href="due_view.php" class="btn btn-success" style="width:100%;padding:100px;">Due Payments</a>&nbsp;
+          </div>
         </div>
+            
 
       <?php }else if(isset($_SESSION['login']) && $_SESSION['user_type'] == "trainer") {?>
         <div class="row">
@@ -183,7 +187,8 @@
           <a href="about_trainer.php" class="btn btn-warning" style="width:100%;padding:100px;"><span class="fa fa-address-card"></span>&nbsp;About Trainer</a>&nbsp;
         </div>
         <div class="col-lg-6">
-          <a href="invoice.php?id=<?php echo $_SESSION['userid'];?>" class="btn btn-primary" style="width:100%;padding:100px;">Invoice</a>&nbsp;
+            <?php $id = $_SESSION['userid'];?>
+          <a href="view_pay_user.php?id=<?php echo $id;?>" class="btn btn-primary" style="width:100%;padding:100px;">View Payments</a>&nbsp;
         </div>
         <div class="col-lg-6">
           <a href="login.php" class="btn btn-danger" style="width:100%;padding:100px;">Attendance</a>&nbsp;
